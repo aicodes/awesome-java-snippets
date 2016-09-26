@@ -1,0 +1,29 @@
+---
+  uuid: 793ca758-2cee-4db6-8edc-d682e035e52e
+  intent: "convert string to int"
+  snippet:
+    code: |
+      int result = Integer.parseInt(myString);
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  uuid: 8e1fcb8c-977c-492d-911d-6ee4bb7ab9dc
+  intent: "create a new List/ArrayList"
+  snippet:
+    code: |
+      List myList = new ArrayList();
+    imports:
+      - "java.util.List"
+      - "java.util.ArrayList"
+
+---
+  uuid: 018a3b96-0ebf-4209-ae33-179bb7985d34
+  intent: "split string on whitespace delimiters"
+  snippet:
+    code: |
+      myString.split("\s+")
+    variable:
+      - name: myString
+        type: java.lang.String
