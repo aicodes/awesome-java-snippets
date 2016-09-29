@@ -1,2 +1,2 @@
 check:
-	js-yaml curated.yaml
+	js-yaml snippets.yaml
