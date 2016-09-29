@@ -1,0 +1,1554 @@
+---
+  uuid: 4f7a60fa-9cdd-41fc-87ca-311215fc76aa
+  intent: convert string to int
+  snippet:
+    code: |
+      int result = Integer.parseInt(myString);
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  uuid: 08639bc9-e6f5-4e1a-95cd-e4449935a88e
+  intent: create a new List
+  snippet:
+    code: |
+      List myList = new ArrayList();
+    imports:
+      - java.util.List
+      - java.util.ArrayList
+
+---
+  uuid: 8f5401aa-e04e-4528-9f4b-f206274a386a
+  intent: split string on whitespace delimiters
+  snippet:
+    code: |
+      String[] result = myString.split("\\s+");
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  uuid: 42d59351-63d4-4773-94c0-99cd70724db0
+  intent: get the current date time now
+  snippet:
+    code: |
+      LocalDateTime now = LocalDateTime.now();
+    imports:
+      - java.time.LocalDateTime
+
+---
+  uuid: 41e56f72-90ff-445b-96eb-9d4e4502063e
+  intent: convert string to double
+  snippet:
+    code: |
+      double result = Double.parseDouble(myString);
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  uuid: 97c10336-21e0-4890-81d0-7f70fb1048ce
+  intent: removing whitespace from string
+  snippet:
+    code: |
+      String result = myString.replaceAll("\\s+","");
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  uuid: de5b96e6-2397-41b2-ba5a-e5fce6773b02
+  intent: reverse a List
+  snippet:
+    code: |
+      List reversed = Collections.reverse(myList);
+    variable:
+      - name: myList
+        type: java.util.List
+    imports:
+      - java.lang.Collections
+
+---
+  uuid: cfd8c911-a456-4842-b67f-ba56a7a0e377
+  intent: print an array
+  snippet:
+    code: |
+      System.out.println(Arrays.toString(myArray));
+    variable:
+      - name: myArray
+        type: java.lang.Object[]
+    imports:
+      - java.util.Arrays
+
+---
+  uuid: 88e41284-fb61-4b74-9d19-68be5d8a7cef
+  intent: convert array to string
+  snippet:
+    code: |
+      String arrayString = Arrays.toString(myArray));
+    variable:
+      - name: myArray
+        type: java.lang.Object[]
+    imports:
+      - java.util.Arrays
+
+---
+  uuid: 44d68bf9-f0ca-4c28-9923-ce37f661a170
+  intent: read all files in a folder
+  snippet:
+    code: |
+      Files.walk(Paths.get(myPath)).forEach(filePath -> {
+        if (Files.isRegularFile(filePath)) {
+          System.out.println(filePath);
+        }
+      });
+    variable:
+      - name: myPath
+        type: java.lang.String
+    imports:
+      - java.nio.file.Files
+      - java.nio.file.Paths
+
+---
+  intent: remove whitespace from string
+  uuid: 82e67d48-7e6b-45cf-8efd-c644cb0435c7
+  snippet:
+    code: |
+      myString.replaceAll("\\s+","");
+    variable:
+      - name: myString
+        type: java.lang.String
+
+---
+  snippet:
+    code: |
+      for (Map.Entry<String, String> entry : myMap.entrySet()) {
+
+      }
+    variable:
+      - name: myMap
+        type: java.util.Map
+  intent: iterate over entries in a map
+  uuid: 1edf86a6-a1eb-41d0-b342-a09761842ad6
+
+---
+  snippet:
+    code: |
+      stringbuilder.setLength(0)
+    variable:
+      - name: stringbuilder
+        type: java.lang.StringBuilder
+  intent: clear or empty a StringBuilder
+  uuid: 5de79506-5eda-4e28-912b-be7352680a32
+
+---
+  snippet:
+    code: |
+      InputStream stream = new ByteArrayInputStream(
+          myString.getBytes(StandardCharsets.UTF_8));
+    variable:
+      - name: InputStream
+        type: java.lang.String
+    imports:
+      - java.io.ByteArrayInputStream
+      - java.io.InputStream
+      - java.nio.charset.StandardCharsets
+  intent: convert a string to an InputStream
+  uuid: 6d5713a3-4524-4531-a68e-80d2620300e2
+
+---
+  snippet:
+    code: |
+      byte[] array = Files.readAllBytes(myFile.toPath());
+    variable:
+      - name: myFile
+        type: java.util.File
+    imports:
+      - java.nio.file.Files
+  intent: file to byte[] array
+  uuid: 11a9a788-dcd0-4fae-9685-a3f12026afd9
+
+---
+  snippet:
+    code: |
+      StringBuilder myName = new StringBuilder("domanokz");
+      myName.setCharAt(4, 'x');
+
+  intent: replace a character at a specific index in a string
+  uuid: 8d2ea7a1-d9fc-49e8-bbcb-f1e07b12b633
+
+---
+  snippet:
+    code: |
+      int result = (myBoolean) ? 1 : 0;
+    variable:
+      - name: myBoolean
+        type: boolean
+  intent: convert boolean to int
+  uuid: c6316fc9-908d-437f-8a49-f3e8b799128c
+
+---
+  snippet:
+    code: |
+      String.valueOf(myChar);
+    variable:
+      - name: myChar
+        type: char
+  intent: convert a char to a string
+  uuid: a2c27ed3-3b43-4a4e-89be-e168952eb7f7
+
+---
+  snippet:
+    code: |
+      boolean contains = IntStream.of(a).anyMatch(x -> x == myValue);
+    variable:
+      - name: myValue
+        type: java.lang.Object
+  intent: test if an array contains a certain value
+  uuid: 718fb160-6da3-432e-b565-2ad6648a9a06
+
+---
+  snippet:
+    code: |
+      for(MyEnum e : MyEnum.values()) {
+      }
+  intent: loop to iterate over enum values
+  uuid: b561958f-59a6-4876-8b72-dc2f9f71d7f5
+
+---
+  snippet:
+    code: |
+      SortedSet keys = new TreeSet(myMap.keySet());
+      for (Object key : keys) {
+        Object value = myMap.get(key);
+      }
+
+  intent: sort map values by key
+  uuid: c5dc875b-4f53-4f3d-bd04-7e45b3e204c4
+
+---
+  snippet:
+    code: |
+      System.arraycopy(src, 0, dest, 0, src.length);
+    variable:
+      - name: src
+        type: array
+      - name: dest
+        type: array
+  intent: make copy of array
+  uuid: 4f2c5cae-06c9-417b-82a5-4a4836b89021
+
+---
+  snippet:
+    code: |
+      List<Value> list = new ArrayList<Value>(map.values());
+  intent: convert map to list
+  uuid: 4df1995f-3b04-4896-8b50-6990668a4995
+
+---
+  snippet:
+    code: |
+      MyEnum.valueOf("STRING_NAME");
+
+  intent: lookup enum by string value
+  uuid: 2e94a914-90cb-4030-94bb-e736a06780cb
+
+---
+  snippet:
+    code: |
+      Integer i = myDouble.intValue();
+  intent: double to integer
+  uuid: db75babf-a5a1-45bd-a613-9e59ac252939
+
+---
+  snippet:
+    code: |
+      System.getProperty("user.dir")
+  intent: get current working directory
+  uuid: 5b112d02-0114-4f68-b968-b4cb0d3c41b6
+
+---
+  snippet:
+    code: |
+      FileUtils.copyFile();
+  intent: copy a file
+  uuid: 57500c40-6cd9-4b2e-ad79-bd04d7c2c918
+
+---
+  snippet:
+    code: |
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      ObjectOutput out = null;
+      try {
+       out = new ObjectOutputStream(bos);
+       out.writeObject(yourObject);
+       out.flush();
+       byte[] yourBytes = bos.toByteArray();
+       ...
+      } finally {
+       try {
+       bos.close();
+       } catch (IOException ex) {
+       // ignore close exception
+       }
+      }
+
+  intent: serializable object to byte array
+  uuid: a860fa79-3f28-4027-a371-50f13040d158
+
+---
+  snippet:
+    code: |
+      ArrayList<String> places = new ArrayList<>(
+        Arrays.asList("Buenos Aires", "Córdoba", "La Plata"));
+  intent: initialization of an arraylist in one line
+  uuid: 5fd83cf4-7ecc-43e1-8188-d009fa05cebd
+
+---
+  snippet:
+    code: |
+      Thread.currentThread().getStackTrace()
+  intent: get current stack trace
+  uuid: 6d8aff7e-898e-41c9-a444-f7d5a1be52a5
+
+---
+  snippet:
+    code: |
+      //Use ByteArrayOutputStream
+      new String( baos.toByteArray(), Charset.defaultCharset());
+  intent: get an outputstream into a string
+  uuid: 08a3c41f-b47f-48fe-8510-e0797d302045
+
+---
+  snippet:
+    code: |
+      String[] myStringArray = new String[3];
+      String[] myStringArray = {"a","b","c"};
+      String[] myStringArray = new String[]{"a","b","c"};
+
+  intent: declare an array
+  uuid: 88185dbb-1219-498a-aae5-513923acb609
+
+---
+  snippet:
+    code: |
+      InputStream is;
+      byte[] bytes = IOUtils.toByteArray(is);
+
+  intent: convert inputstream to byte array
+  uuid: 912fc2d9-1c61-4ebf-9e70-b3c6c0eb9851
+
+---
+  snippet:
+    code: |
+      public static int safeLongToInt(long l) {
+       if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+       throw new IllegalArgumentException
+       (l + " cannot be cast to int without changing its value.");
+       }
+       return (int) l;
+      }
+
+  intent: safely casting long to int
+  uuid: d7249215-2a65-4c74-a4fb-ae703ab2b24e
+
+---
+  snippet:
+    code: |
+      String[] GPXFILES1 = myset.toArray(new String[myset.size()]);
+
+  intent: convert set<string> to string[]
+  uuid: b3284da8-f12d-4e4a-84a5-84046f13cd20
+
+---
+  snippet:
+    code: |
+      String newString = oldString.trim();
+
+  intent: strip leading and trailing spaces string
+  uuid: ce0e7e5e-d753-4c14-82ee-c94c5a23fcdb
+
+---
+  snippet:
+    imports:
+      - java.util.List
+      - java.util.ArrayList
+    code: |
+      String[] stockArr = stockList.toArray(stockArr);
+
+  intent: convert Arraylist to array
+  uuid: daebbc1f-f106-4a6b-944b-9292c3d57d74
+
+---
+  snippet:
+    code: |
+      public static boolean isInteger(String s, int radix) {
+       Scanner sc = new Scanner(s.trim());
+       if(!sc.hasNextInt(radix)) return false;
+       // we know it starts with a valid int, now make sure
+       // there's nothing left!
+       sc.nextInt(radix);
+       return !sc.hasNext();
+      }
+  intent: determine if a string is an integer
+  uuid: 6de1d303-68f8-48f2-9a6d-1af51a766417
+
+---
+  snippet:
+    code: |
+      new File("/path/directory").mkdirs();
+
+  intent: create a directory
+  uuid: 61de7fe3-52ea-4163-a3ec-71e85e39f2e5
+
+---
+  snippet:
+    code: |
+      WordUtils.capitalize(myString);
+    imports:
+      - org.apache.commons.lang.WordUtils
+    variable:
+      - name: myString
+        type: java.lang.String
+  intent: capitalize first character of a string
+  uuid: b0637095-ae5a-4d27-a0c9-a7509be0d1b7
+
+---
+  snippet:
+    code: |
+      TimeZone tz = TimeZone.getTimeZone("UTC");
+      DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+      df.setTimeZone(tz);
+      String nowAsISO = df.format(new Date());
+
+  intent: get current moment in iso 8601 format
+  uuid: 36c9755f-cdbd-4b33-b1a5-56bc1f172d0a
+
+---
+  snippet:
+    code: |
+      Object.getClass()
+
+  intent: determine an object's class
+  uuid: b2bb8984-33f6-4517-9f89-40bab3dc5fca
+
+---
+  snippet:
+    code: |
+      String className = this.getClass().getSimpleName();
+
+  intent: get the current class name
+  uuid: d6c40449-0688-4fc2-98f4-d5af1a34dcd0
+
+---
+  snippet:
+    code: |
+      Math.round(f)
+
+  intent: convert float to int
+  uuid: cac7f3c3-6c3e-4761-872c-ebf9723ae9f9
+
+---
+  snippet:
+    code: |
+      FileUtils.deleteDirectory(new File("directory"));
+
+  intent: delete directories recursively
+  uuid: 25547c17-c9af-4dbb-9f24-aeba44107bbc
+
+---
+  snippet:
+    code: |
+      DecimalFormat df = new DecimalFormat("#.####");
+      df.setRoundingMode(RoundingMode.CEILING);
+      System.out.println(df.format(my_double_value));
+
+  intent: round a number to n decimal places
+  uuid: 3b3fc026-bf0f-4274-80df-26e54b7de908
+
+---
+  snippet:
+    code: |
+      DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+      Date today = Calendar.getInstance().getTime();
+      String reportDate = df.format(today);
+
+  intent: convert java.util.date to string
+  uuid: 55c508ac-b54c-49b6-80ba-3ea244dfb2c0
+
+---
+  snippet:
+    code: |
+      StringUtils.isBlank(myString);
+  intent: check whether a string is not null and not empty
+  uuid: e8c54b38-19c1-472c-bb5f-3bfab6866d74
+
+---
+  snippet:
+    code: |
+      String[] parts = string.split(delimiter);
+    variable:
+      - name: delimiter
+        type: java.lang.String
+  intent: split a string
+  uuid: da9297a5-7602-4bd1-bce9-63b09ad30c88
+
+---
+  snippet:
+    code: |
+      str1.toLowerCase().contains(str2.toLowerCase())
+
+  intent: check if a string contains a substring (ignoring case)
+  uuid: bebcd611-8d68-46c5-baf6-10c0ccb5d3b4
+
+---
+  snippet:
+    code: |
+      HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
+
+      for(Entry<String, HashMap> entry : selects.entrySet()) {
+       String key = entry.getKey();
+       HashMap value = entry.getValue();
+       // ...
+      }
+
+  intent: for each the hashmap
+  uuid: 930f3165-52fc-4d85-a450-2d453f9483c3
+
+---
+  snippet:
+    code: |
+      List<Integer> list = IntStream.of(ints).boxed().collect(Collectors.toList());
+
+  intent: convert int[] into list<integer>
+  uuid: 20515a04-3ccd-43f3-bb1a-545b34caa2d1
+
+---
+  snippet:
+    code: |
+      StringWriter writer = new StringWriter();
+      IOUtils.copy(inputStream, writer, encoding);
+      String theString = writer.toString();
+
+  intent: read/convert an inputstream to a string
+  uuid: 4144a021-a04e-4b67-9691-c82e0a93c80d
+
+---
+  snippet:
+    code: |
+      String b = new String(my_char_array);
+
+  intent: convert a char array back to a string
+  uuid: abdd0e58-a0a6-4e72-8a71-6f39063b2e79
+
+---
+  snippet:
+    imports:
+      - java.util.concurrent.ThreadLocalRandom
+    code: |
+      // nextInt is normally exclusive of the top value,
+      // so add 1 to make it inclusive
+      ThreadLocalRandom.current().nextInt(min, max + 1);
+
+  intent: generating random integers in a specific range
+  uuid: 0ad2cb04-d5b1-4d94-a8f5-23854c087038
+
+---
+  snippet:
+    code: |
+      String string = "January 2, 2010";
+      DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+      Date date = format.parse(string);
+      System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
+
+  intent: string to date conversion
+  uuid: 2d7170d1-73b2-47c1-8d3c-75a312ecc272
+
+---
+  snippet:
+    code: |
+      List list = new ArrayList(myCollection);
+
+  intent: convert collection to list
+  uuid: dc40d560-b88d-4ffd-8646-3e6003f01184
+
+---
+  snippet:
+    code: |
+      List<String> lines = Arrays.asList("The first line", "The second line");
+      Path file = Paths.get("the-file-name.txt");
+      Files.write(file, lines, Charset.forName("UTF-8"));
+      //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+
+
+  intent: create a file and write to a file
+  uuid: 9df443f0-39af-4161-99b4-e27fb5d4e2df
+
+---
+  snippet:
+    imports:
+      - org.json.JSONObject"
+    code: |
+      JSONObject obj = new JSONObject(" .... ");
+      String value = obj.getJSONObject("object_field").getString("field");
+
+      JSONArray arr = obj.getJSONArray("array_field");
+      for (int i = 0; i < arr.length(); i++)
+      {
+       String name = arr.getJSONObject(i).getString("name");
+      }
+
+  intent: parse json
+  uuid: 62544b87-52a6-4f1b-b1c0-5a831cf0c6e2
+
+---
+  snippet:
+    code: |
+      Objects.equals("test", new String("test")) //true
+
+  intent: compare strings
+  uuid: 91f245b5-0a2a-4115-bcf0-ebfc26fd935c
+
+---
+  snippet:
+    code: |
+      * <pre>
+      * {@code
+      * Set<String> s;
+      * System.out.println(s);
+      * }
+      * </pre>
+
+  intent: multiple line code example doc comment
+  uuid: 9b8743ce-6dba-4ce7-94f6-46bb00bba865
+
+---
+  snippet:
+    code: |
+       if (str != null && str.length() > 0 && str.charAt(str.length()-1)=='x') {
+       str = str.substring(0, str.length()-1);
+       }
+       return str;
+
+  intent: remove the last character from a string
+  uuid: f236bc03-6667-4133-bdb7-5bec879ad456
+
+---
+  snippet:
+    code: |
+      String joined = String.join(", ", myList);
+
+  intent: convert list<string> to a string
+  uuid: b46cc275-66c5-40ca-9ef5-5af14bf0ab9c
+
+---
+  snippet:
+    code: |
+      class DummyBean {
+       private String dummy;
+
+       public DummyBean(DummyBean another) {
+       this.dummy = another.dummy; // you can access
+       }
+      }
+
+  intent: copy an object
+  uuid: 2effc7b8-cf91-4f69-9193-5b1baa985b76
+
+---
+  snippet:
+    code: |
+      String.join(delimiter, elements);
+
+  intent: a quick and easy way to join array elements with a separator (the opposite of split)
+  uuid: ca6b83c6-f673-4bcd-85be-2e90d3c4f5a3
+
+---
+  snippet:
+    code: |
+      public class Test {
+       private static final Map<Integer, String> myMap;
+       static {
+       Map<Integer, String> aMap = ....;
+       aMap.put(1, "one");
+       aMap.put(2, "two");
+       myMap = Collections.unmodifiableMap(aMap);
+       }
+      }
+
+  intent: initialise a static map
+  uuid: 0415a2f4-5b30-40eb-bd98-40d08d099a34
+
+---
+  snippet:
+    code: |
+      URI uri = new URI(
+       "http",
+       "www.google.com",
+       "/ig/api",
+       "weather=San Francisco",
+       null);
+      String request = uri.toASCIIString();
+
+  intent: http url address encoding
+  uuid: 414852e3-1b87-4d65-a3cd-d8336aabf589
+
+---
+  snippet:
+    code: |
+      File[] files = directory.listFiles();
+
+      Arrays.sort(files, new Comparator<File>(){
+       public int compare(File f1, File f2)
+       {
+       return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
+       } });
+
+  intent: best way to list files , sorted by date modified
+  uuid: 8ff518fd-6329-4096-909b-4e9e058aa220
+
+---
+  snippet:
+    code: |
+      public static byte[] hexStringToByteArray(String s) {
+       int len = s.length();
+       byte[] data = new byte[len / 2];
+       for (int i = 0; i < len; i += 2) {
+       data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+       + Character.digit(s.charAt(i+1), 16));
+       }
+       return data;
+      }
+
+  intent: convert a string representation of a hex dump to a byte array
+  uuid: a34def3f-241a-4ee0-9c60-75c2d1f90596
+
+---
+  snippet:
+    code: |
+      long unixTime = System.currentTimeMillis() / 1000L;
+  intent: getting "unixtime
+  uuid: f5789a7b-0a7a-4a74-9483-4df1c4d4de64
+
+---
+  snippet:
+    code: |
+      /**
+       LICENSE Makefile README.md curated.yaml ready_for_yaml.json to_curate.yaml toyaml.sh @see <a href="http://google.com">http://google.com</a>
+       */
+
+  intent: linking to an external url doc
+  uuid: 7efc257a-4036-4f9e-9514-77413bb895c3
+
+---
+  snippet:
+    code: |
+      ListIterator li = a.listIterator(a.size());
+
+      // Iterate in reverse.
+      while(li.hasPrevious()) {
+       System.out.println(li.previous());
+      }
+
+  intent: iterating through a list in reverse order
+  uuid: 83dabf3f-53c2-47e2-a4f4-75dc10c56ff2
+
+---
+  snippet:
+    code: |
+      public static List<Dog> cloneList(List<Dog> list) {
+       List<Dog> clone = new ArrayList<Dog>(list.size());
+       for (Dog item : list) clone.add(item.clone());
+       return clone;
+      }
+
+  intent: clone arraylist and also clone its contents
+  uuid: 9a5f2b30-eabe-43a1-8912-1fc86958d386
+
+---
+  snippet:
+    code: |
+      GregorianCalendar c = new GregorianCalendar();
+      c.setTime(yourDate);
+      XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+
+  intent: java.util.date to xmlgregoriancalendar
+  uuid: f16160f9-78e7-435e-8992-795dc4e2de54
+
+---
+  snippet:
+    code: |
+      Integer i = theLong != null ? theLong.intValue() : null;
+
+  intent: convert long into integer
+  uuid: d539570e-23f6-449b-8701-454e4600da75
+
+---
+  snippet:
+    imports:
+      - java.security.SecureRandom"
+      - java.math.BigInteger"
+    code: |
+      public final class SessionIdentifierGenerator {
+       private SecureRandom random = new SecureRandom();
+
+       public String nextSessionId() {
+       return new BigInteger(130, random).toString(32);
+       }
+      }
+
+  intent: generate a random alpha-numeric string
+  uuid: da0347fa-a5d0-411a-9c33-bdcd191e8745
+
+---
+  snippet:
+    code: |
+      Foo value = map.get(key);
+      if (value != null) {
+       ...
+      } else {
+       // Key might be present...
+       if (map.containsKey(key)) {
+       // Okay, there's a key but the value is null
+       } else {
+       // Definitely no such key
+       }
+      }
+
+  intent: key existence check in hashmap
+  uuid: b4fc4e45-2faa-4c6d-b638-d8aea049c9fc
+
+---
+  snippet:
+    code: |
+      List<String> supplierNames = Arrays.asList("sup1", "sup2", "sup3");
+
+  intent: initialize list<string> object
+  uuid: e3cf1afa-3b10-434a-be0d-e08ea01068c9
+
+---
+  snippet:
+    code: |
+      String str = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+
+  intent: utf-8 byte[] to string
+  uuid: 2ea51340-d907-44b5-bf63-67419c03dd01
+
+---
+  snippet:
+    code: |
+      OutputStream out;
+      IOUtils.copy(in,out);
+      in.close();
+      out.close();
+
+  intent: easy way to write contents of a inputstream to an outputstream
+  uuid: 8a00f0a6-ad8c-4dd9-b2c9-29a387243056
+
+---
+  snippet:
+    code: |
+      String ext = FilenameUtils.getExtension("/path/to/file/foo.txt");
+
+  intent: get the file extension of a file
+  uuid: 5e312586-aca8-4bae-8a8d-cbb4d4fd7e74
+
+---
+  snippet:
+    code: |
+      org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(myHTML);
+
+  intent: recommended method for escaping html
+  uuid: 58018e40-5236-4cd6-a894-16e0510eea5b
+
+---
+  snippet:
+    imports:
+      - java.util.List
+      - com.google.gson.Gson
+    code: |
+      public class Test {
+
+       public static void main(String... args) throws Exception {
+       String json =
+       "{
+       + "'title': 'some title',
+       //..
+       + "}";
+       Data data = new Gson().fromJson(json, Data.class);
+       System.out.println(data);
+       }
+
+       class Data {
+       private String title;
+       public String getTitle() { return title; }
+       public void setTitle(String title) { this.title = title; }
+       }
+      }
+
+  intent: converting json to object
+  uuid: eba53b52-5c64-407f-9886-3faa0fd2a961
+
+---
+  snippet:
+    code: |
+      new HashSet<Foo>(myList);
+
+  intent: easiest way to convert a list to a set
+  uuid: dc967406-7473-41cf-ad5e-2e7c7f5d7d53
+
+---
+  snippet:
+    code: |
+      Long.parseLong("0", 10)
+
+  intent: convert string to long
+  uuid: 7865e39d-24ca-4a4f-9620-7e0fd6be393c
+
+---
+  snippet:
+    code: |
+      PrintWriter out = new PrintWriter("filename.txt");
+      out.println(text);
+
+  intent: save a string to a text file
+  uuid: cc6f0805-a006-42ac-bb81-98cdc3a65a56
+
+---
+  snippet:
+    code: |
+      Collections.sort(Database.arrayList, new Comparator<MyObject>() {
+       @Override
+       public int compare(MyObject o1, MyObject o2) {
+       return o1.getStartDate().compareTo(o2.getStartDate());
+       }
+      });
+
+  intent: sort arraylist of custom objects by property
+  uuid: 0eb6d36d-59b2-452f-a1fa-235510a25b55
+
+---
+  snippet:
+    code: |
+      Boolean boolean1 = Boolean.valueOf("true");
+
+  intent: convert string object to boolean object
+  uuid: e6c30fce-b7a9-49e7-933e-266403c172d8
+
+---
+  snippet:
+    code: |
+      InputStream is = new ByteArrayInputStream( myString.getBytes( charset ) );
+
+  intent: turn a string into a stream
+  uuid: 15ea67d9-6f91-4da4-a75a-e20e19d59c01
+
+---
+  snippet:
+    code: |
+      int count = StringUtils.countMatches("a.b.c.d", ".");
+
+
+  intent: count the number of occurrences of a char in a string
+  uuid: e0da43a5-e9ae-453e-bde5-cb1ffe5bd82b
+
+---
+  snippet:
+    code: |
+      public static void printMap(Map mp) {
+       Iterator it = mp.entrySet().iterator();
+       while (it.hasNext()) {
+       Map.Entry pair = (Map.Entry)it.next();
+       System.out.println(pair.getKey() + " = " + pair.getValue());
+       it.remove(); // avoids a ConcurrentModificationException
+       }
+      }
+
+  intent: iterate through a hashmap
+  uuid: f21ffa2a-08fb-448b-801a-765627f674b6
+
+---
+  snippet:
+    code: |
+      Date input = new Date();
+      LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+
+  intent: convert java.util.date to java.time.localdate
+  uuid: 6e49bc0a-28aa-4250-8529-58ad7aad6f9e
+
+---
+  snippet:
+    code: |
+      java.util.Date time=new java.util.Date((long)timeStamp*1000);
+
+  intent: date from unix timestamp
+  uuid: e5966ce9-a1be-48f5-9499-1538a5e1aeec
+
+---
+  snippet:
+    code: |
+      MyEnum.values()[my_int]
+
+  intent: cast int to enum
+  uuid: 8f8794b7-ca8d-4195-80d0-362954210f14
+
+---
+  snippet:
+    code: |
+      String[] both = (String[])ArrayUtils.addAll(first, second);
+
+  intent: concatenate two arrays
+  uuid: aa265ca2-5649-40e5-9ab9-6674b59935fc
+
+---
+  snippet:
+    code: |
+      @Test(expected=IndexOutOfBoundsException.class)
+      public void testIndexOutOfBoundsException() {
+       ArrayList emptyList = new ArrayList();
+       Object o = emptyList.get(0);
+      }
+
+  intent: how do you assert that a certain exception is thrown in junit 4 tests
+  uuid: 966016f4-ddf4-4141-b12c-629b2a7be6e9
+
+---
+  snippet:
+    code: |
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      try (InputStream is = Files.newInputStream(Paths.get("file.txt"));
+       DigestInputStream dis = new DigestInputStream(is, md))
+      {
+       /Applications /Incompatible Software /Library /Network /System /Users /Volumes /bin /cloudsql /cores /data /dev /etc /home /installer.failurerequests /net /opt /private /sbin /tmp /usr /var Read decorated stream (dis) to EOF as normal... */
+      }
+      byte[] digest = md.digest();
+
+  intent: getting a file's md5 checksum
+  uuid: 9271b203-9b73-457c-8821-9702916bdb32
+
+---
+  snippet:
+    imports:
+      - java.util.Scanner
+      - java.io.File
+    code: |
+      String content = new Scanner(new File("filename")).useDelimiter("\\Z").next();
+
+
+  intent: what is simplest way to read a file into string
+  uuid: 6a946c5b-57bd-47ce-9d4e-da695a26fafa
+
+---
+  snippet:
+    code: |
+      int[] arr = {1,2,3};
+
+  intent: initialize an array
+  uuid: 77a1fe98-9096-4786-9055-9737af8c4822
+
+---
+  snippet:
+    code: |
+      Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays()
+
+  intent: number of days between two dates in joda-time
+  uuid: b75fa949-1efe-45c6-9aab-3a1af4a3c638
+
+---
+  snippet:
+    code: |
+      org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(Throwable)
+
+  intent: convert a stack trace to a string
+  uuid: 17b93a48-402c-491b-9c0b-d0eee97d78a4
+
+---
+  snippet:
+    code: |
+      byte[] b = string.getBytes(Charset.forName("UTF-8"));
+
+  intent: convert string into byte[]
+  uuid: 0a64da52-7e8c-41e1-b8b2-dfc9cb447bc8
+
+---
+  snippet:
+    imports:
+      - org.apache.commons.codec.binary.Hex
+    code: |
+      String foo = "I am a string";
+      byte[] bytes = foo.getBytes();
+      System.out.println( Hex.encodeHexString( bytes ) );
+
+  intent: convert a byte array to a hex string
+  uuid: 9e607599-6ff4-47fb-bd45-e94424f198b3
+
+---
+  snippet:
+    code: |
+      File f = new File(filePathString);
+      if(f.exists() && !f.isDirectory()) {
+       // do something
+      }
+
+  intent: check if a file exists
+  uuid: ecb396c4-2240-4b76-bb3d-bbcf2977de5b
+
+---
+  snippet:
+    code: |
+      //Use JodaTime
+      Interval interval = new Interval(oldInstant, new Instant());
+
+  intent: calculating the difference between two date instances
+  uuid: 83cfcefb-d8b3-4a53-af7c-29c505eadbab
+
+---
+  snippet:
+    code: |
+      Integer[] spam = new Integer[] { 1, 2, 3 };
+      Arrays.asList(spam);
+
+  intent: converting array to list
+  uuid: 266c79b3-1d80-4f02-85a3-b17ead5d07f9
+
+---
+  snippet:
+    code: |
+      FileUtils.copyURLToFile(URL, File)
+
+  intent: download and save a file from internet
+  uuid: b365d5ec-88ce-421b-bc1d-ed9b7fd0261e
+
+---
+  snippet:
+    code: |
+      SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+      dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+      //Local time zone
+      SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+
+      //Time in GMT
+      return dateFormatLocal.parse( dateFormatGmt.format(new Date()) );
+
+  intent: get the current date and time in utc or gmt
+  uuid: 347a8bb1-d6fa-459c-9ccb-b5b6975d827f
+
+---
+  snippet:
+    code: |
+      Foo[] array = list.toArray(new Foo[list.size()]);
+
+  intent: convert list to array
+  uuid: 3f4d79d4-8e46-4e48-b150-1933cf42634f
+
+---
+  snippet:
+    code: |
+      List<Person> beerDrinkers = persons.stream()
+       .filter(p -> p.getAge() > 16).collect(Collectors.toList());
+
+  intent: best way to filter a collection
+  uuid: 219e82de-98ba-4b41-a55c-0b009bae7778
+
+---
+  snippet:
+    code: |
+      List<String> newList = new ArrayList<String>(listOne);
+      newList.addAll(listTwo);
+
+  intent: join two lists
+  uuid: fa095020-13ec-4b19-99bd-6c627052c945
+
+---
+  snippet:
+    code: |
+      String q = "random word £500 bank $";
+      String url = "http://example.com/query?q=" + URLEncoder.encode(q, "UTF-8");
+
+  intent: url encoding of query string parameters
+  uuid: f3016f74-2f23-427c-ae27-8701b2e6741f
+
+---
+  snippet:
+    code: |
+      String.format("%d min, %d sec",
+       TimeUnit.MILLISECONDS.toMinutes(millis),
+       TimeUnit.MILLISECONDS.toSeconds(millis) -
+       TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+      );
+
+  intent: convert milliseconds to minutes and seconds
+  uuid: a77c9593-a071-43f1-a406-81bf244127b6
+
+---
+  snippet:
+    code: |
+      static String readFile(String path, Charset encoding)
+       throws IOException
+      {
+       byte[] encoded = Files.readAllBytes(Paths.get(path));
+       return new String(encoded, encoding);
+      }
+
+  intent: create a string from the contents of a file
+  uuid: 8464b35f-5e86-4752-b6f0-1217bf392953
+
+---
+  snippet:
+    imports:
+      - java.util.Base64
+    code: |
+      byte[] bytes = "Hello, World!".getBytes("UTF-8");
+      String encoded = Base64.getEncoder().encodeToString(bytes);
+      byte[] decoded = Base64.getDecoder().decode(encoded);
+
+  intent: decode base64 data
+  uuid: c135aef0-5d9d-456b-89c1-6f3427d8e3ff
+
+---
+  snippet:
+    code: |
+      public static int[] convertIntegers(List<Integer> integers)
+      {
+       int[] ret = new int[integers.size()];
+       Iterator<Integer> iterator = integers.iterator();
+       for (int i = 0; i < ret.length; i++)
+       {
+       ret[i] = iterator.next().intValue();
+       }
+       return ret;
+      }
+
+  intent: convert an arraylist containing integers to primitive int array
+  uuid: 54c009f9-848b-458d-b7a0-40b58eecc1fb
+
+---
+  snippet:
+    code: |
+      IOUtils.copy(InputStream, OutputStream)
+
+  intent: convert outputstream to inputstream
+  uuid: 099fce7c-21f7-4d9a-9b73-fcae23c8d870
+
+---
+  snippet:
+    code: |
+      Transformer transformer = TransformerFactory.newInstance().newTransformer();
+      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+      //initialize StreamResult with File object to save to file
+      StreamResult result = new StreamResult(new StringWriter());
+      DOMSource source = new DOMSource(doc);
+      transformer.transform(source, result);
+      String xmlString = result.getWriter().toString();
+      System.out.println(xmlString);
+
+
+  intent: pretty print xml
+  uuid: e60265d6-fcc7-415f-921e-953641d621cc
+
+---
+  snippet:
+    code: |
+      MyClass e = list.get(list.size() - 1);
+
+  intent: get the last value of an arraylist
+  uuid: 9d11dc3c-9d29-4ec5-947c-5ee32b478037
+
+---
+  snippet:
+    code: |
+      java.util.Date date = ...
+      DateTime dateTime = new DateTime(date);
+
+  intent: convert .util.date to jodatime
+  uuid: 99bab35d-7522-4b10-861d-6f97aab23096
+
+---
+  snippet:
+    code: |
+      javax.xml.bind.DatatypeConverter.parseDateTime("2010-01-01T12:00:00Z");
+
+  intent: converting iso 8601-compliant string to java.util.date
+  uuid: 776f3bc3-0bba-4fd6-8167-ab5dab918ea6
+
+---
+  snippet:
+    code: |
+      Integer.toString(i)
+
+  intent: convert from int to string
+  uuid: 07a70966-53c1-4cc9-82d7-e39672dabb39
+
+---
+  snippet:
+    code: |
+      try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+       stream.forEach(System.out::println);
+      }
+
+  intent: read a large text file line by line
+  uuid: 83d404ce-5512-467f-9241-f18bda5aed53
+
+---
+  snippet:
+    code: |
+      public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+       return map.entrySet()
+       .stream()
+       .filter(entry -> Objects.equals(entry.getValue(), value))
+       .map(Map.Entry::getKey)
+       .collect(Collectors.toSet());
+      }
+  intent: hashmap get key from value
+  uuid: 0b70ae39-035c-4304-8e28-51c4628de5e9
+
+---
+  snippet:
+    code: |
+      Date in = new Date();
+      LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+      Date out = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+
+  intent: converting between java.time.localdatetime and java.util.date
+  uuid: da2275cc-9f8c-4d0e-b7ee-1d82ee4aa3a8
+
+---
+  snippet:
+    code: |
+      //For zero padding with length 4
+      String.format("%04d", yourNumber);
+
+  intent: pad an integers with zeros on the left
+  uuid: 3010854c-15db-4832-a10f-b4205c346ab0
+
+---
+  snippet:
+    code: |
+
+  intent: net.urlconnection to fire and handle http requests
+  uuid: 19118880-bb3f-4f1c-9c06-89f3ce985097
+
+---
+  snippet:
+    code: |
+
+      new StringBuilder(hi).reverse().toString()
+
+  intent: reverse a string
+  uuid: 950cd6da-c01d-4dc0-ae73-a19dd16c70fb
+
+---
+  snippet:
+    code: |
+      sb.setLength(sb.length() - 1);
+
+  intent: remove last character of a stringbuilder
+  uuid: 29a57dbf-5c8a-4e5a-9259-80a8fc3c6bfe
+
+---
+  snippet:
+    code: |
+      Path path = Paths.get("foo", "bar", "baz.txt");
+
+  intent: combine paths
+  uuid: 4c4f10b1-0d21-4f79-af14-34017648e4f7
+
+---
+  snippet:
+    code: |
+      public static String padRight(String s, int n) {
+       return String.format("%1$-" + n + "s", s);
+      }
+
+      public static String padLeft(String s, int n) {
+       return String.format("%1$" + n + "s", s);
+      }
+
+  intent: pad a string
+  uuid: 8f152681-6677-43ca-b8af-622d6f4f9657
+
+---
+  snippet:
+    code: |
+      Arrays.sort(a, Collections.reverseOrder());
+
+  intent: array sort descending
+  uuid: 50f5a700-4699-48ea-9ced-c6df28334b76
+
+---
+  snippet:
+    code: |
+      String mydata = "some string with 'the data i want' inside";
+      Pattern pattern = Pattern.compile("'(.*?)'");
+      Matcher matcher = pattern.matcher(mydata);
+      if (matcher.find())
+      {
+       System.out.println(matcher.group(1));
+      }
+
+  intent: extract a substring using regex
+  uuid: 28f52f64-923e-4131-b65c-943caf54acd3
+
+---
+  snippet:
+    code: |
+      Set<T> mySet = new HashSet<T>(Arrays.asList(someArray));
+
+  intent: convert an array to a set
+  uuid: 960263d5-7391-4813-aab1-fd6f2eced2b3
+
+---
+  snippet:
+    code: |
+      public static String humanReadableByteCount(long bytes, boolean si) {
+       int unit = si ? 1000 : 1024;
+       if (bytes < unit) return bytes + " B";
+       int exp = (int) (Math.log(bytes) / Math.log(unit));
+       String pre = (si ? "kMGTPE" : KMGTPE").charAt(exp-1) + (si ? "" : i");
+       return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+      }
+
+  intent: convert byte size into human readable format
+  uuid: d1a6bb9f-cc85-4bc4-b8da-c93b067e6705
+
+---
+  snippet:
+    code: |
+      Jsoup.parse(html).text();
+
+  intent: remove html tags from a string
+  uuid: 1785956a-4040-419c-abab-80012a6d8120
+
+---
+  snippet:
+    code: |
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+
+  intent: get the current time in yyyy-mm-dd hh:mi:sec.millisecond format
+  uuid: 8ebbf574-6ae6-4901-a37a-1c927810518e
+
+---
+  snippet:
+    code: |
+      String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
+
+  intent: convert object array to string array
+  uuid: 982870a0-3128-4fbf-b2a4-269b40b639f7
+
+---
+  snippet:
+    code: |
+      String dt = "2008-01-01"; // Start date
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      Calendar c = Calendar.getInstance();
+      c.setTime(sdf.parse(dt));
+      c.add(Calendar.DATE, 1); // number of days to add
+      dt = sdf.format(c.getTime()); // dt is now the new date
+
+  intent: increment a date by one day
+  uuid: 63e52fef-35f0-48c5-948e-e11b389e270e
+
+---
+  snippet:
+    code: |
+      int[] intArray = ArrayUtils.toPrimitive(myList.toArray(new Integer[myList.size()]));
+
+
+  intent: convert list<integer> to int[]
+  uuid: 84b33875-774f-43fa-9c47-1dba8c136ffa
+
+---
+  snippet:
+    code: |
+      List<String> al = new ArrayList<>();
+      // add elements to al, including duplicates
+      Set<String> hs = new HashSet<>();
+      hs.addAll(al);
+      al.clear();
+      al.addAll(hs);
+
+  intent: remove repeated elements from arraylist
+  uuid: dee97f51-6c6e-49f5-88ba-e2926127486d
+
+---
+  snippet:
+    code: |
+      Collections.shuffle(fileList, new Random(System.nanoTime()));
+
+  intent: randomize arraylist
+  uuid: 430c6c44-95bc-437c-aadb-4ed3126e41cf
+
+---
+  snippet:
+    code: |
+      LineNumberReader lnr = new LineNumberReader(new FileReader(new File("File1")));
+      lnr.skip(Long.MAX_VALUE);
+      System.out.println(lnr.getLineNumber() + 1); //Add 1 because line index starts at 0
+      // Finally, the LineNumberReader object should be closed to prevent resource leak
+      lnr.close();
+
+  intent: number of lines in a file
+  uuid: 395bf30f-7364-4590-a2b1-e184db75fad6
+
+---
+  snippet:
+    code: |
+      new ArrayList<Element>(Arrays.asList(array))
+
+  intent: create arraylist from array
+  uuid: d2c72a88-6324-4f95-9801-86a0ed25c5eb
+
+---
+  snippet:
+    imports:
+      - java.util.List
+      - java.util.ArrayList
+    code: |
+      List<String> list = new ArrayList<String>(listOfTopicAuthors);
+
+  intent: most concise way to convert a set<string> to a list<string>
+  uuid: 0c789d85-659f-4fb2-8eee-5120e8d9b556
+
+---
+  snippet:
+    code: |
+      DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+      DateTime dt = formatter.parseDateTime(string);
+
+  intent: converting a date string to a datetime object using joda time library
+  uuid: 2b9be68b-7f22-4a84-9dac-a81677efb97d
+
+---
+  snippet:
+    imports:
+      - java.nio.file.Path
+      - java.nio.file.Paths
+      - java.nio.file.Files
+      - java.nio.charset.Charset
+    code: |
+      Path file = Paths.get("the-file-name.txt");
+      Files.write(file, lines, Charset.forName("UTF-8"));
+  intent: write to file
+  uuid: e6423243-38a6-418d-ba0c-be831cc9a936
+
+---
+  snippet:
+    imports:
+      - java.util.Scanner
+      - java.io.File
+      - java.util.List
+      - java.util.ArrayList
+    code: |
+      List<String> list = new ArrayList<>();
+      Scanner s = new Scanner(new File("file name")).useDelimiter("\\Z");
+      while(s.hasNext()) {
+      list.add(s.next());
+      }
+
+  intent: read file to List<String>
+  uuid: 549ac1d2-0450-464e-ae96-d9a980e96da5
