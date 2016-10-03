@@ -4,7 +4,7 @@
   snippet:
     code: |
       int result = Integer.parseInt(myString);
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
 
@@ -24,7 +24,7 @@
   snippet:
     code: |
       String[] result = myString.split("\\s+");
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
 
@@ -43,7 +43,7 @@
   snippet:
     code: |
       double result = Double.parseDouble(myString);
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
 
@@ -53,7 +53,7 @@
   snippet:
     code: |
       String result = myString.replaceAll("\\s+","");
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
 
@@ -62,8 +62,8 @@
   intent: reverse a List
   snippet:
     code: |
-      List reversed = Collections.reverse(myList);
-    variable:
+      Collections.reverse(myList);
+    variables:
       - name: myList
         type: java.util.List
     imports:
@@ -75,7 +75,7 @@
   snippet:
     code: |
       System.out.println(Arrays.toString(myArray));
-    variable:
+    variables:
       - name: myArray
         type: java.lang.Object[]
     imports:
@@ -87,7 +87,7 @@
   snippet:
     code: |
       String arrayString = Arrays.toString(myArray));
-    variable:
+    variables:
       - name: myArray
         type: java.lang.Object[]
     imports:
@@ -103,7 +103,7 @@
           System.out.println(filePath);
         }
       });
-    variable:
+    variables:
       - name: myPath
         type: java.lang.String
     imports:
@@ -116,7 +116,7 @@
   snippet:
     code: |
       myString.replaceAll("\\s+","");
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
 
@@ -126,7 +126,7 @@
       for (Map.Entry<String, String> entry : myMap.entrySet()) {
 
       }
-    variable:
+    variables:
       - name: myMap
         type: java.util.Map
   intent: iterate over entries in a map
@@ -135,11 +135,11 @@
 ---
   snippet:
     code: |
-      stringbuilder.setLength(0)
-    variable:
-      - name: stringbuilder
+      myStringBuilder.setLength(0);
+    variables:
+      - name: myStringBuilder
         type: java.lang.StringBuilder
-  intent: clear or empty a StringBuilder
+  intent: clear empty a StringBuilder
   uuid: 5de79506-5eda-4e28-912b-be7352680a32
 
 ---
@@ -147,21 +147,21 @@
     code: |
       InputStream stream = new ByteArrayInputStream(
           myString.getBytes(StandardCharsets.UTF_8));
-    variable:
+    variables:
       - name: InputStream
         type: java.lang.String
     imports:
       - java.io.ByteArrayInputStream
       - java.io.InputStream
       - java.nio.charset.StandardCharsets
-  intent: convert a string to an InputStream
+  intent: convert a String to an InputStream
   uuid: 6d5713a3-4524-4531-a68e-80d2620300e2
 
 ---
   snippet:
     code: |
       byte[] array = Files.readAllBytes(myFile.toPath());
-    variable:
+    variables:
       - name: myFile
         type: java.util.File
     imports:
@@ -182,7 +182,7 @@
   snippet:
     code: |
       int result = (myBoolean) ? 1 : 0;
-    variable:
+    variables:
       - name: myBoolean
         type: boolean
   intent: convert boolean to int
@@ -192,7 +192,7 @@
   snippet:
     code: |
       String.valueOf(myChar);
-    variable:
+    variables:
       - name: myChar
         type: char
   intent: convert a char to a string
@@ -202,7 +202,7 @@
   snippet:
     code: |
       boolean contains = IntStream.of(a).anyMatch(x -> x == myValue);
-    variable:
+    variables:
       - name: myValue
         type: java.lang.Object
   intent: test if an array contains a certain value
@@ -231,7 +231,7 @@
   snippet:
     code: |
       System.arraycopy(src, 0, dest, 0, src.length);
-    variable:
+    variables:
       - name: src
         type: array
       - name: dest
@@ -258,7 +258,7 @@
   snippet:
     code: |
       Integer i = myDouble.intValue();
-  intent: double to integer
+  intent: Double to Integer
   uuid: db75babf-a5a1-45bd-a613-9e59ac252939
 
 ---
@@ -272,27 +272,20 @@
   snippet:
     code: |
       FileUtils.copyFile();
+    imports:
+      - org.apache.commons.io.FileUtils
   intent: copy a file
   uuid: 57500c40-6cd9-4b2e-ad79-bd04d7c2c918
 
 ---
   snippet:
     code: |
-      ByteArrayOutputStream bos = new ByteArrayOutputStream();
-      ObjectOutput out = null;
-      try {
-       out = new ObjectOutputStream(bos);
-       out.writeObject(yourObject);
-       out.flush();
-       byte[] yourBytes = bos.toByteArray();
-       ...
-      } finally {
-       try {
-       bos.close();
-       } catch (IOException ex) {
-       // ignore close exception
-       }
-      }
+      byte[] result = SerializationUtils.serialize(myObject);
+    variables:
+      - name: myObject
+        type: java.lang.Object
+    imports:
+      - org.apache.commons.lang.SerializationUtils
 
   intent: serializable object to byte array
   uuid: a860fa79-3f28-4027-a371-50f13040d158
@@ -333,8 +326,7 @@
 ---
   snippet:
     code: |
-      InputStream is;
-      byte[] bytes = IOUtils.toByteArray(is);
+      byte[] result = IOUtils.toByteArray(myInputStream);
 
   intent: convert inputstream to byte array
   uuid: 912fc2d9-1c61-4ebf-9e70-b3c6c0eb9851
@@ -356,9 +348,11 @@
 ---
   snippet:
     code: |
-      String[] GPXFILES1 = myset.toArray(new String[myset.size()]);
-
-  intent: convert set<string> to string[]
+      String[] result = mySet.toArray(new String[mySet.size()]);
+    variables:
+      - name: mySet
+        type: java.util.Set
+  intent: convert Set<String> to String array
   uuid: b3284da8-f12d-4e4a-84a5-84046f13cd20
 
 ---
@@ -408,7 +402,7 @@
       WordUtils.capitalize(myString);
     imports:
       - org.apache.commons.lang.WordUtils
-    variable:
+    variables:
       - name: myString
         type: java.lang.String
   intent: capitalize first character of a string
@@ -488,7 +482,7 @@
   snippet:
     code: |
       String[] parts = string.split(delimiter);
-    variable:
+    variables:
       - name: delimiter
         type: java.lang.String
   intent: split a string
@@ -609,19 +603,6 @@
 
   intent: compare strings
   uuid: 91f245b5-0a2a-4115-bcf0-ebfc26fd935c
-
----
-  snippet:
-    code: |
-      * <pre>
-      * {@code
-      * Set<String> s;
-      * System.out.println(s);
-      * }
-      * </pre>
-
-  intent: multiple line code example doc comment
-  uuid: 9b8743ce-6dba-4ce7-94f6-46bb00bba865
 
 ---
   snippet:
@@ -887,7 +868,7 @@
        }
       }
 
-  intent: converting json to object
+  intent: convert json to object
   uuid: eba53b52-5c64-407f-9886-3faa0fd2a961
 
 ---
@@ -1110,7 +1091,7 @@
       Integer[] spam = new Integer[] { 1, 2, 3 };
       Arrays.asList(spam);
 
-  intent: converting array to list
+  intent: convert array to list
   uuid: 266c79b3-1d80-4f02-85a3-b17ead5d07f9
 
 ---
@@ -1246,7 +1227,6 @@
       String xmlString = result.getWriter().toString();
       System.out.println(xmlString);
 
-
   intent: pretty print xml
   uuid: e60265d6-fcc7-415f-921e-953641d621cc
 
@@ -1272,14 +1252,16 @@
     code: |
       javax.xml.bind.DatatypeConverter.parseDateTime("2010-01-01T12:00:00Z");
 
-  intent: converting iso 8601-compliant string to java.util.date
+  intent: convert iso 8601-compliant string to java.util.date
   uuid: 776f3bc3-0bba-4fd6-8167-ab5dab918ea6
 
 ---
   snippet:
     code: |
-      Integer.toString(i)
-
+      Integer.toString(myInt);
+    variables:
+      - name: myInt
+        type: int
   intent: convert from int to string
   uuid: 07a70966-53c1-4cc9-82d7-e39672dabb39
 
@@ -1313,7 +1295,7 @@
       LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
       Date out = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
 
-  intent: converting between java.time.localdatetime and java.util.date
+  intent: convert between java.time.localdatetime and java.util.date
   uuid: da2275cc-9f8c-4d0e-b7ee-1d82ee4aa3a8
 
 ---
@@ -1325,19 +1307,14 @@
   intent: pad an integers with zeros on the left
   uuid: 3010854c-15db-4832-a10f-b4205c346ab0
 
----
-  snippet:
-    code: |
-
-  intent: net.urlconnection to fire and handle http requests
-  uuid: 19118880-bb3f-4f1c-9c06-89f3ce985097
 
 ---
   snippet:
     code: |
-
-      new StringBuilder(hi).reverse().toString()
-
+      new StringBuilder(myString).reverse().toString()
+    variables:
+      - name: myString
+        type: java.lang.String
   intent: reverse a string
   uuid: 950cd6da-c01d-4dc0-ae73-a19dd16c70fb
 
@@ -1458,7 +1435,6 @@
     code: |
       int[] intArray = ArrayUtils.toPrimitive(myList.toArray(new Integer[myList.size()]));
 
-
   intent: convert list<integer> to int[]
   uuid: 84b33875-774f-43fa-9c47-1dba8c136ffa
 
@@ -1478,9 +1454,13 @@
 ---
   snippet:
     code: |
-      Collections.shuffle(fileList, new Random(System.nanoTime()));
-
-  intent: randomize arraylist
+      Collections.shuffle(myList, new Random(System.nanoTime()));
+    imports:
+      - java.util.Collections
+    variables:
+      - name: myList
+        type: java.util.List
+  intent: randomize shuffle List
   uuid: 430c6c44-95bc-437c-aadb-4ed3126e41cf
 
 ---
@@ -1509,9 +1489,11 @@
       - java.util.List
       - java.util.ArrayList
     code: |
-      List<String> list = new ArrayList<String>(listOfTopicAuthors);
-
-  intent: most concise way to convert a set<string> to a list<string>
+      List<String> list = new ArrayList<String>(mySet);
+    variables:
+      - name: mySet
+        type: java.util.Set
+  intent: convert a Set<String> to a List<String>
   uuid: 0c789d85-659f-4fb2-8eee-5120e8d9b556
 
 ---
@@ -1520,7 +1502,7 @@
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
       DateTime dt = formatter.parseDateTime(string);
 
-  intent: converting a date string to a datetime object using joda time library
+  intent: convert a date string to a datetime object using joda time library
   uuid: 2b9be68b-7f22-4a84-9dac-a81677efb97d
 
 ---
@@ -1531,9 +1513,12 @@
       - java.nio.file.Files
       - java.nio.charset.Charset
     code: |
-      Path file = Paths.get("the-file-name.txt");
+      Path file = Paths.get(myFileName);
       Files.write(file, lines, Charset.forName("UTF-8"));
-  intent: write to file
+    variables:
+      - name: myFileName
+        type: java.lang.String
+  intent: write list to file
   uuid: e6423243-38a6-418d-ba0c-be831cc9a936
 
 ---
@@ -1545,10 +1530,13 @@
       - java.util.ArrayList
     code: |
       List<String> list = new ArrayList<>();
-      Scanner s = new Scanner(new File("file name")).useDelimiter("\\Z");
+      Scanner s = new Scanner(new File(myFileName)).useDelimiter("\\Z");
       while(s.hasNext()) {
-      list.add(s.next());
+        list.add(s.next());
       }
+    variables:
+      - name: myFileName
+        type: java.lang.String
 
   intent: read file to List<String>
   uuid: 549ac1d2-0450-464e-ae96-d9a980e96da5
