@@ -1,5 +1,5 @@
 check:
-	js-yaml snippets.yaml
+	@js-yaml snippets.yaml
 
 dump:
 	@js-yaml snippets.yaml | jq -c '.[]'

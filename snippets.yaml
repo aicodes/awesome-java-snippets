@@ -20,7 +20,7 @@
 
 ---
   uuid: 8f5401aa-e04e-4528-9f4b-f206274a386a
-  intent: split string on whitespace delimiters
+  intent: split string on with whitespace delimiters
   snippet:
     code: |
       String[] result = myString.split("\\s+");
@@ -49,7 +49,7 @@
 
 ---
   uuid: 97c10336-21e0-4890-81d0-7f70fb1048ce
-  intent: removing whitespace from string
+  intent: remove whitespace from string
   snippet:
     code: |
       String result = myString.replaceAll("\\s+","");
@@ -68,6 +68,7 @@
         type: java.util.List
     imports:
       - java.lang.Collections
+      - java.util.List
 
 ---
   uuid: cfd8c911-a456-4842-b67f-ba56a7a0e377
@@ -95,7 +96,7 @@
 
 ---
   uuid: 44d68bf9-f0ca-4c28-9923-ce37f661a170
-  intent: read all files in a folder
+  intent: iterate all files in a folder
   snippet:
     code: |
       Files.walk(Paths.get(myPath)).forEach(filePath -> {
@@ -111,16 +112,6 @@
       - java.nio.file.Paths
 
 ---
-  intent: remove whitespace from string
-  uuid: 82e67d48-7e6b-45cf-8efd-c644cb0435c7
-  snippet:
-    code: |
-      myString.replaceAll("\\s+","");
-    variables:
-      - name: myString
-        type: java.lang.String
-
----
   snippet:
     code: |
       for (Map.Entry<String, String> entry : myMap.entrySet()) {
@@ -129,6 +120,8 @@
     variables:
       - name: myMap
         type: java.util.Map
+    imports:
+      - java.util.Map
   intent: iterate over entries in a map
   uuid: 1edf86a6-a1eb-41d0-b342-a09761842ad6
 
@@ -148,13 +141,13 @@
       InputStream stream = new ByteArrayInputStream(
           myString.getBytes(StandardCharsets.UTF_8));
     variables:
-      - name: InputStream
+      - name: myString
         type: java.lang.String
     imports:
       - java.io.ByteArrayInputStream
       - java.io.InputStream
       - java.nio.charset.StandardCharsets
-  intent: convert a String to an InputStream
+  intent: convert a String to java.io.InputStream
   uuid: 6d5713a3-4524-4531-a68e-80d2620300e2
 
 ---
@@ -166,15 +159,18 @@
         type: java.util.File
     imports:
       - java.nio.file.Files
-  intent: file to byte[] array
+      - java.util.File
+  intent: read file content to byte[] array
   uuid: 11a9a788-dcd0-4fae-9685-a3f12026afd9
 
 ---
   snippet:
     code: |
-      StringBuilder myName = new StringBuilder("domanokz");
+      StringBuilder myName = new StringBuilder(myString);
       myName.setCharAt(4, 'x');
-
+    variables:
+      - name: myString
+        type: java.lang.String
   intent: replace a character at a specific index in a string
   uuid: 8d2ea7a1-d9fc-49e8-bbcb-f1e07b12b633
 
@@ -201,17 +197,21 @@
 ---
   snippet:
     code: |
-      boolean contains = IntStream.of(a).anyMatch(x -> x == myValue);
+      boolean contains = IntStream.of(myArray).anyMatch(x -> x == myValue);
     variables:
       - name: myValue
         type: java.lang.Object
+      - name: myArray
+        type: int[]
+    imports:
+      - java.util.stream.IntStream
   intent: test if an array contains a certain value
   uuid: 718fb160-6da3-432e-b565-2ad6648a9a06
 
 ---
   snippet:
     code: |
-      for(MyEnum e : MyEnum.values()) {
+      for(Enum e : Enum.values()) {
       }
   intent: loop to iterate over enum values
   uuid: b561958f-59a6-4876-8b72-dc2f9f71d7f5
@@ -223,7 +223,13 @@
       for (Object key : keys) {
         Object value = myMap.get(key);
       }
-
+    variables:
+      - name: myMap
+        type: java.util.Map
+    imports:
+      - java.util.Map
+      - java.util.SortedSet
+      - java.util.TreeSet
   intent: sort map values by key
   uuid: c5dc875b-4f53-4f3d-bd04-7e45b3e204c4
 
@@ -243,6 +249,11 @@
   snippet:
     code: |
       List<Value> list = new ArrayList<Value>(map.values());
+    variables:
+      - name: map
+        type: java.util.Map
+    imports:
+      - java.util.Map
   intent: convert map to list
   uuid: 4df1995f-3b04-4896-8b50-6990668a4995
 
@@ -258,6 +269,9 @@
   snippet:
     code: |
       Integer i = myDouble.intValue();
+    variables:
+      - name: myDouble
+        type: java.lang.Double
   intent: Double to Integer
   uuid: db75babf-a5a1-45bd-a613-9e59ac252939
 
@@ -295,6 +309,8 @@
     code: |
       ArrayList<String> places = new ArrayList<>(
         Arrays.asList("Buenos Aires", "Córdoba", "La Plata"));
+    imports:
+      - java.util.Arrays
   intent: initialization of an arraylist in one line
   uuid: 5fd83cf4-7ecc-43e1-8188-d009fa05cebd
 
@@ -310,6 +326,8 @@
     code: |
       //Use ByteArrayOutputStream
       new String( baos.toByteArray(), Charset.defaultCharset());
+    imports:
+      - java.nio.charset.Charset
   intent: get an outputstream into a string
   uuid: 08a3c41f-b47f-48fe-8510-e0797d302045
 
@@ -327,7 +345,8 @@
   snippet:
     code: |
       byte[] result = IOUtils.toByteArray(myInputStream);
-
+    imports:
+      - org.apache.commons.io.IOUtils
   intent: convert inputstream to byte array
   uuid: 912fc2d9-1c61-4ebf-9e70-b3c6c0eb9851
 
@@ -352,6 +371,8 @@
     variables:
       - name: mySet
         type: java.util.Set
+    imports:
+      - java.util.Set
   intent: convert Set<String> to String array
   uuid: b3284da8-f12d-4e4a-84a5-84046f13cd20
 
@@ -359,8 +380,10 @@
   snippet:
     code: |
       String newString = oldString.trim();
-
-  intent: strip leading and trailing spaces string
+    variables:
+      - name: oldString
+        type: java.lang.String
+  intent: strip leading and trailing spaces of a string
   uuid: ce0e7e5e-d753-4c14-82ee-c94c5a23fcdb
 
 ---
@@ -369,9 +392,11 @@
       - java.util.List
       - java.util.ArrayList
     code: |
-      String[] stockArr = stockList.toArray(stockArr);
-
-  intent: convert Arraylist to array
+      String[] myStringArray = myList.toArray(new String[myList.size()]);
+    variables:
+      - name: myList
+        type: java.util.List
+  intent: convert ArrayList to array
   uuid: daebbc1f-f106-4a6b-944b-9292c3d57d74
 
 ---
@@ -385,6 +410,8 @@
        sc.nextInt(radix);
        return !sc.hasNext();
       }
+    imports:
+      - java.util.Scanner
   intent: determine if a string is an integer
   uuid: 6de1d303-68f8-48f2-9a6d-1af51a766417
 
@@ -415,7 +442,10 @@
       DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
       df.setTimeZone(tz);
       String nowAsISO = df.format(new Date());
-
+    imports:
+      - java.util.TimeZone
+      - java.text.DateFormat
+      - java.text.SimpleDateFormat
   intent: get current moment in iso 8601 format
   uuid: 36c9755f-cdbd-4b33-b1a5-56bc1f172d0a
 
@@ -446,8 +476,12 @@
 ---
   snippet:
     code: |
-      FileUtils.deleteDirectory(new File("directory"));
-
+      FileUtils.deleteDirectory(new File(myDirectory));
+    variables:
+      - name: myDirectory
+        type: java.lang.String
+    imports:
+      - org.apache.commons.io.FileUtils
   intent: delete directories recursively
   uuid: 25547c17-c9af-4dbb-9f24-aeba44107bbc
 
@@ -457,7 +491,8 @@
       DecimalFormat df = new DecimalFormat("#.####");
       df.setRoundingMode(RoundingMode.CEILING);
       System.out.println(df.format(my_double_value));
-
+    imports:
+      - java.text.DecimalFormat
   intent: round a number to n decimal places
   uuid: 3b3fc026-bf0f-4274-80df-26e54b7de908
 
@@ -467,7 +502,11 @@
       DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
       Date today = Calendar.getInstance().getTime();
       String reportDate = df.format(today);
-
+    imports:
+      - java.text.DateFormat
+      - java.text.SimpleDateFormat
+      - java.util.Calendar
+      - java.util.Date
   intent: convert java.util.date to string
   uuid: 55c508ac-b54c-49b6-80ba-3ea244dfb2c0
 
@@ -475,24 +514,35 @@
   snippet:
     code: |
       StringUtils.isBlank(myString);
+    variables:
+      - name: myString
+        type: java.lang.String
+    imports:
+      - org.apache.commons.lang3.StringUtils
   intent: check whether a string is not null and not empty
   uuid: e8c54b38-19c1-472c-bb5f-3bfab6866d74
 
 ---
   snippet:
     code: |
-      String[] parts = string.split(delimiter);
+      String[] parts = myString.split(delimiter);
     variables:
+      - name: myString
+        type: java.lang.String
       - name: delimiter
         type: java.lang.String
-  intent: split a string
+  intent: split a string with delimiter
   uuid: da9297a5-7602-4bd1-bce9-63b09ad30c88
 
 ---
   snippet:
     code: |
       str1.toLowerCase().contains(str2.toLowerCase())
-
+    variables:
+      - name: str1
+        type: java.lang.String
+      - name: str2
+        type: java.lang.String
   intent: check if a string contains a substring (ignoring case)
   uuid: bebcd611-8d68-46c5-baf6-10c0ccb5d3b4
 
@@ -500,11 +550,9 @@
   snippet:
     code: |
       HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
-
       for(Entry<String, HashMap> entry : selects.entrySet()) {
-       String key = entry.getKey();
-       HashMap value = entry.getValue();
-       // ...
+        String key = entry.getKey();
+        HashMap value = entry.getValue();
       }
 
   intent: for each the hashmap
@@ -514,7 +562,13 @@
   snippet:
     code: |
       List<Integer> list = IntStream.of(ints).boxed().collect(Collectors.toList());
-
+    imports:
+      - java.util.stream.Collectors
+      - java.util.stream.IntStream
+      - java.util.List
+    variables:
+      - name: ints
+        type: int[]
   intent: convert int[] into list<integer>
   uuid: 20515a04-3ccd-43f3-bb1a-545b34caa2d1
 
@@ -524,16 +578,20 @@
       StringWriter writer = new StringWriter();
       IOUtils.copy(inputStream, writer, encoding);
       String theString = writer.toString();
-
+    imports:
+      - java.io.StringWriter
+      - org.apache.commons.io.IOUtils
   intent: read/convert an inputstream to a string
   uuid: 4144a021-a04e-4b67-9691-c82e0a93c80d
 
 ---
   snippet:
     code: |
-      String b = new String(my_char_array);
-
-  intent: convert a char array back to a string
+      String b = new String(myCharArray);
+    variables:
+      - name: myCharArray
+        type: char[]
+  intent: convert a char array to a string
   uuid: abdd0e58-a0a6-4e72-8a71-6f39063b2e79
 
 ---
@@ -544,7 +602,11 @@
       // nextInt is normally exclusive of the top value,
       // so add 1 to make it inclusive
       ThreadLocalRandom.current().nextInt(min, max + 1);
-
+    variables:
+      - name: min
+        type: int
+      - name: max
+        type: int
   intent: generating random integers in a specific range
   uuid: 0ad2cb04-d5b1-4d94-a8f5-23854c087038
 
@@ -555,7 +617,10 @@
       DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
       Date date = format.parse(string);
       System.out.println(date); // Sat Jan 02 00:00:00 GMT 2010
-
+    imports:
+      - java.text.DateFormat
+      - java.text.SimpleDateFormat
+      - java.util.Date
   intent: string to date conversion
   uuid: 2d7170d1-73b2-47c1-8d3c-75a312ecc272
 
@@ -563,7 +628,12 @@
   snippet:
     code: |
       List list = new ArrayList(myCollection);
-
+    imports:
+      - java.util.ArrayList
+      - java.util.List
+    variables:
+      - name: myCollection
+        type: java.util.Collection
   intent: convert collection to list
   uuid: dc40d560-b88d-4ffd-8646-3e6003f01184
 
@@ -574,7 +644,13 @@
       Path file = Paths.get("the-file-name.txt");
       Files.write(file, lines, Charset.forName("UTF-8"));
       //Files.write(file, lines, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-
+    imports:
+      - java.nio.charset.Charset
+      - java.util.Arrays
+      - java.nio.file.Path
+      - java.nio.file.Paths
+      - java.nio.file.Files
+      - java.util.List
 
   intent: create a file and write to a file
   uuid: 9df443f0-39af-4161-99b4-e27fb5d4e2df
@@ -679,13 +755,13 @@
   snippet:
     code: |
       File[] files = directory.listFiles();
-
       Arrays.sort(files, new Comparator<File>(){
-       public int compare(File f1, File f2)
-       {
-       return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
-       } });
-
+       public int compare(File f1, File f2) {
+         return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
+       }
+      });
+    imports:
+      - java.util.Arrays
   intent: best way to list files , sorted by date modified
   uuid: 8ff518fd-6329-4096-909b-4e9e058aa220
 
@@ -804,7 +880,9 @@
   snippet:
     code: |
       List<String> supplierNames = Arrays.asList("sup1", "sup2", "sup3");
-
+    imports:
+      - java.util.Arrays
+      - java.util.List
   intent: initialize list<string> object
   uuid: e3cf1afa-3b10-434a-be0d-e08ea01068c9
 
@@ -1005,6 +1083,9 @@
        /Applications /Incompatible Software /Library /Network /System /Users /Volumes /bin /cloudsql /cores /data /dev /etc /home /installer.failurerequests /net /opt /private /sbin /tmp /usr /var Read decorated stream (dis) to EOF as normal... */
       }
       byte[] digest = md.digest();
+    imports:
+      - java.nio.file.Paths
+      - java.nio.file.Files
 
   intent: getting a file's md5 checksum
   uuid: 9271b203-9b73-457c-8821-9702916bdb32
@@ -1048,8 +1129,12 @@
 ---
   snippet:
     code: |
-      byte[] b = string.getBytes(Charset.forName("UTF-8"));
-
+      byte[] b = myString.getBytes(Charset.forName("UTF-8"));
+    variables:
+      - name: myString
+        type: java.lang.String
+    imports:
+      - java.nio.charset.Charset
   intent: convert string into byte[]
   uuid: 0a64da52-7e8c-41e1-b8b2-dfc9cb447bc8
 
@@ -1090,7 +1175,8 @@
     code: |
       Integer[] spam = new Integer[] { 1, 2, 3 };
       Arrays.asList(spam);
-
+    imports:
+      - java.util.Arrays
   intent: convert array to list
   uuid: 266c79b3-1d80-4f02-85a3-b17ead5d07f9
 
@@ -1112,7 +1198,10 @@
       SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 
       //Time in GMT
-      return dateFormatLocal.parse( dateFormatGmt.format(new Date()) );
+      return dateFormatLocal.parse(dateFormatGmt.format(new Date()) );
+    imports:
+      - java.util.TimeZone
+      - java.text.SimpleDateFormat
 
   intent: get the current date and time in utc or gmt
   uuid: 347a8bb1-d6fa-459c-9ccb-b5b6975d827f
@@ -1173,6 +1262,9 @@
        byte[] encoded = Files.readAllBytes(Paths.get(path));
        return new String(encoded, encoding);
       }
+    imports:
+      - java.nio.file.Paths
+      - java.nio.file.Files
 
   intent: create a string from the contents of a file
   uuid: 8464b35f-5e86-4752-b6f0-1217bf392953
@@ -1241,10 +1333,14 @@
 ---
   snippet:
     code: |
-      java.util.Date date = ...
-      DateTime dateTime = new DateTime(date);
-
-  intent: convert .util.date to jodatime
+      DateTime dateTime = new DateTime(myDate);
+    imports:
+      - java.util.Date
+      - org.joda.time.DateTime
+    variables:
+      - name: myDate
+        type: java.util.Date
+  intent: convert java.util.Date to joda DateTime
   uuid: 99bab35d-7522-4b10-861d-6f97aab23096
 
 ---
@@ -1271,7 +1367,9 @@
       try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
        stream.forEach(System.out::println);
       }
-
+    imports:
+      - java.nio.file.Paths
+      - java.nio.file.Files
   intent: read a large text file line by line
   uuid: 83d404ce-5512-467f-9241-f18bda5aed53
 
@@ -1291,10 +1389,15 @@
 ---
   snippet:
     code: |
-      Date in = new Date();
-      LocalDateTime ldt = LocalDateTime.ofInstant(in.toInstant(), ZoneId.systemDefault());
+      LocalDateTime ldt = LocalDateTime.ofInstant(myDate.toInstant(), ZoneId.systemDefault());
       Date out = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
-
+    imports:
+      - org.joda.time.LocalDateTime
+      - java.util.Date
+      - java.time.ZoneId
+    variables:
+      - name: myDate
+        type: java.util.Date
   intent: convert between java.time.localdatetime and java.util.date
   uuid: da2275cc-9f8c-4d0e-b7ee-1d82ee4aa3a8
 
@@ -1321,16 +1424,20 @@
 ---
   snippet:
     code: |
-      sb.setLength(sb.length() - 1);
-
-  intent: remove last character of a stringbuilder
+      myStringBuilder.setLength(myStringBuilder.length() - 1);
+    variables:
+      - name: myStringBuilder
+        type: java.lang.StringBuilder
+  intent: remove last character of a StringBuilder
   uuid: 29a57dbf-5c8a-4e5a-9259-80a8fc3c6bfe
 
 ---
   snippet:
     code: |
       Path path = Paths.get("foo", "bar", "baz.txt");
-
+    imports:
+      - java.nio.file.Path
+      - java.nio.file.Paths
   intent: combine paths
   uuid: 4c4f10b1-0d21-4f79-af14-34017648e4f7
 
@@ -1352,7 +1459,9 @@
   snippet:
     code: |
       Arrays.sort(a, Collections.reverseOrder());
-
+    imports:
+      - java.util.Collections
+      - java.util.Arrays
   intent: array sort descending
   uuid: 50f5a700-4699-48ea-9ced-c6df28334b76
 
@@ -1366,6 +1475,9 @@
       {
        System.out.println(matcher.group(1));
       }
+    imports:
+      - java.util.regex.Matcher
+      - java.util.regex.Pattern
 
   intent: extract a substring using regex
   uuid: 28f52f64-923e-4131-b65c-943caf54acd3
@@ -1374,7 +1486,10 @@
   snippet:
     code: |
       Set<T> mySet = new HashSet<T>(Arrays.asList(someArray));
-
+    imports:
+      - java.util.Arrays
+      - java.util.Set
+      - java.util.HashSet
   intent: convert an array to a set
   uuid: 960263d5-7391-4813-aab1-fd6f2eced2b3
 
@@ -1404,8 +1519,8 @@
   snippet:
     code: |
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
-
+    imports:
+      - java.text.SimpleDateFormat
   intent: get the current time in yyyy-mm-dd hh:mi:sec.millisecond format
   uuid: 8ebbf574-6ae6-4901-a37a-1c927810518e
 
@@ -1413,7 +1528,8 @@
   snippet:
     code: |
       String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
-
+    imports:
+      - java.util.Arrays
   intent: convert object array to string array
   uuid: 982870a0-3128-4fbf-b2a4-269b40b639f7
 
@@ -1426,7 +1542,9 @@
       c.setTime(sdf.parse(dt));
       c.add(Calendar.DATE, 1); // number of days to add
       dt = sdf.format(c.getTime()); // dt is now the new date
-
+    imports:
+      - java.text.SimpleDateFormat
+      - java.util.Calendar
   intent: increment a date by one day
   uuid: 63e52fef-35f0-48c5-948e-e11b389e270e
 
@@ -1434,8 +1552,13 @@
   snippet:
     code: |
       int[] intArray = ArrayUtils.toPrimitive(myList.toArray(new Integer[myList.size()]));
-
-  intent: convert list<integer> to int[]
+    imports:
+      - org.apache.commons.lang.ArrayUtils
+      - java.util.List
+    variables:
+      - name: myList
+        type: java.util.List
+  intent: convert List<Integer> to int[]
   uuid: 84b33875-774f-43fa-9c47-1dba8c136ffa
 
 ---
@@ -1457,6 +1580,7 @@
       Collections.shuffle(myList, new Random(System.nanoTime()));
     imports:
       - java.util.Collections
+      - java.util.Random
     variables:
       - name: myList
         type: java.util.List
@@ -1466,12 +1590,17 @@
 ---
   snippet:
     code: |
-      LineNumberReader lnr = new LineNumberReader(new FileReader(new File("File1")));
-      lnr.skip(Long.MAX_VALUE);
-      System.out.println(lnr.getLineNumber() + 1); //Add 1 because line index starts at 0
-      // Finally, the LineNumberReader object should be closed to prevent resource leak
-      lnr.close();
-
+      LineNumberReader reader = new LineNumberReader(new FileReader(new File("myFile")));
+      reader.skip(Long.MAX_VALUE);
+      System.out.println(reader.getLineNumber() + 1); // line index starts at 0
+      reader.close();
+    variables:
+      - name: myFile
+        type: java.lang.String
+    imports:
+      - java.io.LineNumberReader
+      - java.io.FileReader
+      - java.io.File
   intent: number of lines in a file
   uuid: 395bf30f-7364-4590-a2b1-e184db75fad6
 
@@ -1479,7 +1608,8 @@
   snippet:
     code: |
       new ArrayList<Element>(Arrays.asList(array))
-
+    imports:
+      - java.util.Arrays
   intent: create arraylist from array
   uuid: d2c72a88-6324-4f95-9801-86a0ed25c5eb
 
@@ -1488,6 +1618,7 @@
     imports:
       - java.util.List
       - java.util.ArrayList
+      - java.util.Set
     code: |
       List<String> list = new ArrayList<String>(mySet);
     variables:
@@ -1501,7 +1632,10 @@
     code: |
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
       DateTime dt = formatter.parseDateTime(string);
-
+    imports:
+      - java.time.format.DateTimeFormatter
+      - org.joda.time.format.DateTimeFormat
+      - org.joda.time.DateTime
   intent: convert a date string to a datetime object using joda time library
   uuid: 2b9be68b-7f22-4a84-9dac-a81677efb97d
 
@@ -1512,12 +1646,15 @@
       - java.nio.file.Paths
       - java.nio.file.Files
       - java.nio.charset.Charset
+      - java.util.List
     code: |
       Path file = Paths.get(myFileName);
-      Files.write(file, lines, Charset.forName("UTF-8"));
+      Files.write(file, myList, Charset.forName("UTF-8"));
     variables:
       - name: myFileName
         type: java.lang.String
+      - name: myList
+        type: java.util.List
   intent: write list to file
   uuid: e6423243-38a6-418d-ba0c-be831cc9a936
 
