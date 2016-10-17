@@ -67,7 +67,7 @@
       - name: myList
         type: java.util.List
     imports:
-      - java.lang.Collections
+      - java.util.Collections
       - java.util.List
 
 ---
@@ -80,7 +80,7 @@
       - name: myArray
         type: java.lang.Object
         dimensions:
-          - []
+          - "[]"
     imports:
       - java.util.Arrays
 
@@ -89,12 +89,12 @@
   intent: convert array to string
   snippet:
     code: |
-      String arrayString = Arrays.toString(myArray));
+      String arrayString = Arrays.toString(myArray);
     variables:
       - name: myArray
         type: java.lang.Object
         dimensions:
-          - []
+          - "[]"
     imports:
       - java.util.Arrays
 
@@ -117,13 +117,19 @@
 
 ---
   snippet:
+    parameters:
+      - name: K
+      - name: V
     code: |
-      for (Map.Entry<String, String> entry : myMap.entrySet()) {
+      for (Map.Entry<K, V> entry : myMap.entrySet()) {
 
       }
     variables:
       - name: myMap
         type: java.util.Map
+        parameters:
+          - K
+          - V
     imports:
       - java.util.Map
   intent: iterate over entries in a map
@@ -160,10 +166,10 @@
       byte[] array = Files.readAllBytes(myFile.toPath());
     variables:
       - name: myFile
-        type: java.util.File
+        type: java.io.File
     imports:
       - java.nio.file.Files
-      - java.util.File
+      - java.io.File
   intent: read file content to byte[] array
   uuid: 11a9a788-dcd0-4fae-9685-a3f12026afd9
 
@@ -201,12 +207,14 @@
 ---
   snippet:
     code: |
-      boolean contains = IntStream.of(myArray).anyMatch(x -> x == myValue);
+      boolean contains = IntStream.of(myArray).anyMatch(x -> x.equals(myValue));
     variables:
       - name: myValue
         type: java.lang.Object
       - name: myArray
-        type: int[]
+        type: java.lang.Object
+        dimensions:
+          - "[]"
     imports:
       - java.util.stream.IntStream
   intent: test if an array contains a certain value
@@ -244,23 +252,30 @@
     variables:
       - name: src
         type: java.lang.Object
+        dimensions:
+          - "[]"
       - name: dest
         type: java.lang.Object
+        dimensions:
+          - "[]"
   intent: make copy of array
   uuid: 4f2c5cae-06c9-417b-82a5-4a4836b89021
 
 ---
   snippet:
     code: |
-      List<T> list = new ArrayList<T>(map.values());
+      List<V> list = new ArrayList<V>(map.values());
     parameters:
-      - name: T
+      - name: K
+      - name: V
     variables:
       - name: map
         type: java.util.Map
         parameters:
-          - T
+          - K
+          - V
     imports:
+      - java.util.ArrayList
       - java.util.Map
       - java.util.List
   intent: convert map to list
@@ -289,16 +304,23 @@
 ---
   snippet:
     code: |
-      System.getProperty("user.dir")
+      System.getProperty("user.dir");
   intent: get current working directory
   uuid: 5b112d02-0114-4f68-b968-b4cb0d3c41b6
 
 ---
   snippet:
-    code: |
-      FileUtils.copyFile();
     imports:
+      - java.io.File
       - org.apache.commons.io.FileUtils
+    variables:
+      - name: srcFile
+        type: java.io.File
+      - name: destFile
+        type: java.io.File
+    code: |
+      FileUtils.copyFile(srcFile, destFile);
+
   intent: copy a file
   uuid: 57500c40-6cd9-4b2e-ad79-bd04d7c2c918
 
@@ -329,7 +351,7 @@
 ---
   snippet:
     code: |
-      Thread.currentThread().getStackTrace()
+      Thread.currentThread().getStackTrace();
   intent: get current stack trace
   uuid: 6d8aff7e-898e-41c9-a444-f7d5a1be52a5
 
@@ -338,9 +360,9 @@
 ---
   snippet:
     code: |
-      String[] myStringArray = new String[3];
-      String[] myStringArray = {"a","b","c"};
-      String[] myStringArray = new String[]{"a","b","c"};
+      String[] myStringArray1 = new String[3];
+      String[] myStringArray2 = {"a","b","c"};
+      String[] myStringArray3 = new String[]{"a","b","c"};
 
   intent: declare an array
   uuid: 88185dbb-1219-498a-aae5-513923acb609
@@ -350,7 +372,11 @@
     code: |
       byte[] result = IOUtils.toByteArray(myInputStream);
     imports:
+      - java.io.InputStream
       - org.apache.commons.io.IOUtils
+    variables:
+      - name: myInputStream
+        type: java.io.InputStream
   intent: convert inputstream to byte array
   uuid: 912fc2d9-1c61-4ebf-9e70-b3c6c0eb9851
 
@@ -375,6 +401,8 @@
     variables:
       - name: mySet
         type: java.util.Set
+        parameters:
+          - String
     imports:
       - java.util.Set
   intent: convert Set<String> to String array
@@ -400,7 +428,9 @@
     variables:
       - name: myList
         type: java.util.List
-  intent: convert ArrayList to array
+        parameters:
+          - String
+  intent: convert ArrayList of strings to string array
   uuid: daebbc1f-f106-4a6b-944b-9292c3d57d74
 
 ---
@@ -421,6 +451,8 @@
 
 ---
   snippet:
+    imports:
+      - java.io.File
     code: |
       new File("/path/directory").mkdirs();
 
@@ -447,6 +479,7 @@
       df.setTimeZone(tz);
       String nowAsISO = df.format(new Date());
     imports:
+      - java.util.Date
       - java.util.TimeZone
       - java.text.DateFormat
       - java.text.SimpleDateFormat
@@ -455,9 +488,11 @@
 
 ---
   snippet:
+    variables:
+      - name: myObject
+        type: java.lang.Object
     code: |
-      Object.getClass()
-
+      myObject.getClass();
   intent: determine an object's class
   uuid: b2bb8984-33f6-4517-9f89-40bab3dc5fca
 
@@ -472,8 +507,10 @@
 ---
   snippet:
     code: |
-      Math.round(f)
-
+      Math.round(myFloat);
+    variables:
+      - name: myFloat
+        type: float
   intent: convert float to int
   uuid: cac7f3c3-6c3e-4761-872c-ebf9723ae9f9
 
@@ -486,6 +523,7 @@
         type: java.lang.String
     imports:
       - org.apache.commons.io.FileUtils
+      - java.io.File
   intent: delete directories recursively
   uuid: 25547c17-c9af-4dbb-9f24-aeba44107bbc
 
@@ -494,10 +532,14 @@
     code: |
       DecimalFormat df = new DecimalFormat("#.####");
       df.setRoundingMode(RoundingMode.CEILING);
-      System.out.println(df.format(my_double_value));
+      System.out.println(df.format(myDouble));
     imports:
       - java.text.DecimalFormat
-  intent: round a number to n decimal places
+      - java.math.RoundingMode
+    variables:
+      - name: myDouble
+        type: double
+  intent: round a double number to n decimal places
   uuid: 3b3fc026-bf0f-4274-80df-26e54b7de908
 
 ---
@@ -541,7 +583,7 @@
 ---
   snippet:
     code: |
-      str1.toLowerCase().contains(str2.toLowerCase())
+      str1.toLowerCase().contains(str2.toLowerCase());
     variables:
       - name: str1
         type: java.lang.String
@@ -554,7 +596,7 @@
   snippet:
     imports:
       - java.util.HashMap
-      - java.util.Entry
+      - java.util.Map.Entry
     parameters:
       - name: K
       - name: V
@@ -565,7 +607,6 @@
           - K
           - V
     code: |
-      HashMap<K, V> myHashMap = new HashMap<>();
       for(Entry<K, V> entry : myHashMap.entrySet()) {
         K key = entry.getKey();
         V value = entry.getValue();
@@ -590,11 +631,15 @@
 
 ---
   snippet:
+    variables:
+      - name: inputStream
+        type: java.io.InputStream
     code: |
       StringWriter writer = new StringWriter();
       IOUtils.copy(inputStream, writer, encoding);
       String theString = writer.toString();
     imports:
+      - java.io.InputStream
       - java.io.StringWriter
       - org.apache.commons.io.IOUtils
   intent: read/convert an inputstream to a string
@@ -696,7 +741,7 @@
     imports:
       - java.util.Objects
     code: |
-      Objects.equals("test", new String("test")) //true
+      Objects.equals("test", new String("test"));
   intent: compare strings
   uuid: 91f245b5-0a2a-4115-bcf0-ebfc26fd935c
 
@@ -743,10 +788,19 @@
 
 ---
   snippet:
+    imports:
+      - java.util.List
+    variables:
+      - name: delimiter
+        type: java.lang.String
+      - name: elements
+        type: java.util.List
+        parameters:
+          - String
     code: |
       String.join(delimiter, elements);
 
-  intent: a quick and easy way to join array elements with a separator (the opposite of split)
+  intent: join array elements with a separator (the opposite of split)
   uuid: ca6b83c6-f673-4bcd-85be-2e90d3c4f5a3
 
 
@@ -860,7 +914,6 @@
       - java.util.GregorianCalendar
       - java.util.Date
       - javax.xml.datatype.DatatypeFactory
-      - javax.xml.datatype.GregorianCalendar
       - javax.xml.datatype.XMLGregorianCalendar
     variables:
       - name: myDate
@@ -877,27 +930,26 @@
   snippet:
     variables:
       - name: longVar
-        type: long
+        type: java.lang.Long
     code: |
       Integer i = longVar != null ? longVar.intValue() : null;
 
-  intent: convert long into integer
+  intent: convert Long into Integer
   uuid: d539570e-23f6-449b-8701-454e4600da75
 
 ---
   snippet:
     imports:
-      - java.security.SecureRandom"
-      - java.math.BigInteger"
+      - java.security.SecureRandom
+      - java.math.BigInteger
     code: |
       public final class SessionIdentifierGenerator {
        private SecureRandom random = new SecureRandom();
 
        public String nextSessionId() {
-       return new BigInteger(130, random).toString(32);
+         return new BigInteger(130, random).toString(32);
        }
       }
-
   intent: generate a random alpha-numeric string
   uuid: da0347fa-a5d0-411a-9c33-bdcd191e8745
 
@@ -917,6 +969,9 @@
       - java.io.InputStream
       - org.apache.commons.io.IOUtils
       - java.nio.charset.StandardCharsets
+    variables:
+      - name: inputStream
+        type: java.io.InputStream
     code: |
       String str = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
   intent: utf-8 byte[] to string
@@ -925,10 +980,7 @@
 ---
   snippet:
     code: |
-      OutputStream out;
       IOUtils.copy(in, out);
-      in.close();
-      out.close();
     imports:
       - java.io.InputStream
       - java.io.OutputStream
@@ -976,8 +1028,8 @@
 
        public static void main(String... args) throws Exception {
        String json =
-       "{
-       + "'title': 'some title',
+       "{"
+       + "'title': 'some title',"
        //..
        + "}";
        Data data = new Gson().fromJson(json, Data.class);
@@ -985,9 +1037,9 @@
        }
 
        class Data {
-       private String title;
-       public String getTitle() { return title; }
-       public void setTitle(String title) { this.title = title; }
+        private String title;
+        public String getTitle() { return title; }
+        public void setTitle(String title) { this.title = title; }
        }
       }
 
@@ -996,17 +1048,28 @@
 
 ---
   snippet:
+    parameters:
+      - name: T
+    variables:
+      - name: myList
+        type: java.util.List
+        parameters:
+          - T
     code: |
-      new HashSet<Foo>(myList);
-
-  intent: easiest way to convert a list to a set
+      new HashSet<T>(myList);
+    imports:
+      - java.util.HashSet
+      - java.util.List
+  intent: convert a list to a set
   uuid: dc967406-7473-41cf-ad5e-2e7c7f5d7d53
 
 ---
   snippet:
+    variables:
+      - name: myLongStr
+        type: java.lang.String
     code: |
-      Long.parseLong("0", 10)
-
+      long result = Long.parseLong(myLongStr, 10 /* 10 is the base for decimal */);
   intent: convert string to long
   uuid: 7865e39d-24ca-4a4f-9620-7e0fd6be393c
 
@@ -1131,7 +1194,7 @@
       - name: myOrd
         type: int
     code: |
-      T.values()[myOrd]
+      T.values()[myOrd];
   intent: cast int to enum
   uuid: 8f8794b7-ca8d-4195-80d0-362954210f14
 
@@ -1145,11 +1208,11 @@
       - name: first
         type: T
         dimensions:
-          - []
+          - "[]"
       - name: second
         type: T
         dimensions:
-          - []
+          - "[]"
     code: |
       T[] both = (T[])ArrayUtils.addAll(first, second);
 
@@ -1216,15 +1279,22 @@
       - name: end
         type: java.util.Date
     code: |
-      Days.daysBetween(new LocalDate(start), new LocalDate(end)).getDays()
+      Days.daysBetween(new LocalDate(start), new LocalDate(end)).getDays();
   intent: number of days between two dates in joda time
   uuid: b75fa949-1efe-45c6-9aab-3a1af4a3c638
 
 ---
   snippet:
+    imports:
+      - java.io.StringWriter
+      - java.io.PrintWriter
+    variables:
+      - name: myThrowable
+        type: java.lang.Throwable
     code: |
-      org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(Throwable)
-
+      StringWriter sw = new StringWriter();
+      myThrowable.printStackTrace(new PrintWriter(sw));
+      String exceptionAsString = sw.toString();
   intent: convert a stack trace to a string
   uuid: 17b93a48-402c-491b-9c0b-d0eee97d78a4
 
@@ -1305,7 +1375,7 @@
       - name: destination
         type: java.io.File
     code: |
-      FileUtils.copyURLToFile(sourceUrl, destination)
+      FileUtils.copyURLToFile(sourceUrl, destination);
   intent: download and save a file from internet
   uuid: b365d5ec-88ce-421b-bc1d-ed9b7fd0261e
 
@@ -1323,7 +1393,7 @@
     imports:
       - java.util.TimeZone
       - java.text.SimpleDateFormat
-
+      - java.util.Date
   intent: get the current date and time in utc or gmt
   uuid: 347a8bb1-d6fa-459c-9ccb-b5b6975d827f
 
@@ -1348,7 +1418,7 @@
   snippet:
     code: |
       List<T> filteredResult = myList.stream()
-       .filter(e -> Boolean.getBoolean(e)).collect(Collectors.toList());
+       .filter(e -> true /* customize conditions */).collect(Collectors.toList());
     parameters:
       - name: T
     variables:
@@ -1359,7 +1429,7 @@
     imports:
       - java.util.stream.Collectors
       - java.util.List
-  intent: best way to filter a collection
+  intent: filter a collection
   uuid: 219e82de-98ba-4b41-a55c-0b009bae7778
 
 ---
@@ -1442,14 +1512,9 @@
 ---
   snippet:
     code: |
-       int[] result = new int[intList.size()];
-       Iterator<Integer> iterator = intList.iterator();
-       for (int i = 0; i < ret.length; i++) {
-         result[i] = iterator.next().intValue();
-       }
+       int[] result = intList.stream().mapToInt(Integer::intValue).toArray();
     imports:
       - java.util.ArrayList
-      - java.util.Iterator
     variables:
       - name: intList
         type: java.util.ArrayList
@@ -1461,7 +1526,7 @@
 ---
   snippet:
     code: |
-      IOUtils.copy(ins, outs)
+      IOUtils.copy(ins, outs);
     variables:
       - name: ins
         type: InputStream
@@ -1529,6 +1594,9 @@
       - java.nio.file.Paths
       - java.nio.file.Files
       - java.util.Stream
+    variables:
+      - name: fileName
+        type: java.lang.String
     code: |
       try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
         stream.forEach(System.out::println);
@@ -1544,14 +1612,16 @@
       - java.util.Objects
       - java.util.stream.Collectors
     parameters:
-      - name: T
+      - name: K
+      - name: V
     variables:
       - name: myHashMap
         type: java.util.HashMap
         parameters:
-          - T
+          - K
+          - V
       - name: value
-        type: T
+        type: V
     code: |
       myHashMap.entrySet()
        .stream()
@@ -1578,18 +1648,21 @@
 
 ---
   snippet:
+    variables:
+      - name: aNumber
+        type: int
     code: |
       //For zero padding with length 4
-      String.format("%04d", yourNumber);
+      String.format("%04d", aNumber);
 
-  intent: pad an integers with zeros on the left
+  intent: pad an integer with zeros on the left
   uuid: 3010854c-15db-4832-a10f-b4205c346ab0
 
 
 ---
   snippet:
     code: |
-      new StringBuilder(myString).reverse().toString()
+      new StringBuilder(myString).reverse().toString();
     variables:
       - name: myString
         type: java.lang.String
@@ -1620,11 +1693,11 @@
   snippet:
     code: |
       public static String padRight(String s, int n) {
-       return String.format("%1$-" + n + "s", s);
+        return String.format("%1$-" + n + "s", s);
       }
 
       public static String padLeft(String s, int n) {
-       return String.format("%1$" + n + "s", s);
+        return String.format("%1$" + n + "s", s);
       }
 
   intent: pad a string
@@ -1632,11 +1705,16 @@
 
 ---
   snippet:
-    code: |
-      Arrays.sort(a, Collections.reverseOrder());
     imports:
       - java.util.Collections
       - java.util.Arrays
+    variables:
+      - name: a
+        type: java.lang.Object
+        dimensions:
+          - "[]"
+    code: |
+      Arrays.sort(a, Collections.reverseOrder());
   intent: array sort descending
   uuid: 50f5a700-4699-48ea-9ced-c6df28334b76
 
@@ -1646,9 +1724,8 @@
       String mydata = "some string with 'the data i want' inside";
       Pattern pattern = Pattern.compile("'(.*?)'");
       Matcher matcher = pattern.matcher(mydata);
-      if (matcher.find())
-      {
-       System.out.println(matcher.group(1));
+      if (matcher.find()) {
+        System.out.println(matcher.group(1));
       }
     imports:
       - java.util.regex.Matcher
@@ -1671,20 +1748,19 @@
       - name: myArray
         type: T
         dimensions:
-          - []
+          - "[]"
   intent: convert an array to a set
   uuid: 960263d5-7391-4813-aab1-fd6f2eced2b3
 
 ---
   snippet:
+    imports:
+      - org.apache.commons.io.FileUtils
+    variables:
+      - name: fileSize
+        type: long
     code: |
-      public static String humanReadableByteCount(long bytes, boolean si) {
-       int unit = si ? 1000 : 1024;
-       if (bytes < unit) return bytes + " B";
-       int exp = (int) (Math.log(bytes) / Math.log(unit));
-       String pre = (si ? "kMGTPE" : KMGTPE").charAt(exp-1) + (si ? "" : i");
-       return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
-      }
+      FileUtils.byteCountToDisplaySize(fileSize);
 
   intent: convert byte size into human readable format
   uuid: d1a6bb9f-cc85-4bc4-b8da-c93b067e6705
@@ -1701,10 +1777,16 @@
 
 ---
   snippet:
-    code: |
-      String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
     imports:
       - java.util.Arrays
+    variables:
+      - name: objectArray
+        type: java.lang.Object
+        dimensions:
+          - "[]"
+    code: |
+      String[] stringArray = Arrays.copyOf(objectArray, objectArray.length, String[].class);
+
   intent: convert object array to string array
   uuid: 982870a0-3128-4fbf-b2a4-269b40b639f7
 
@@ -1785,10 +1867,17 @@
 
 ---
   snippet:
-    code: |
-      new ArrayList<Element>(Arrays.asList(array))
     imports:
       - java.util.Arrays
+      - java.util.ArrayList
+    variables:
+      - name: myArray
+        type: java.lang.String
+        dimensions:
+          - "[]"
+    code: |
+      new ArrayList<String>(Arrays.asList(myArray));
+
   intent: create arraylist from array
   uuid: d2c72a88-6324-4f95-9801-86a0ed25c5eb
 
@@ -1808,9 +1897,12 @@
 
 ---
   snippet:
+    variables:
+      - name: myString
+        type: java.lang.String
     code: |
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
-      DateTime dt = formatter.parseDateTime(string);
+      DateTime dt = formatter.parseDateTime(myString);
     imports:
       - java.time.format.DateTimeFormatter
       - org.joda.time.format.DateTimeFormat
