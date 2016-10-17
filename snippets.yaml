@@ -78,7 +78,9 @@
       System.out.println(Arrays.toString(myArray));
     variables:
       - name: myArray
-        type: java.lang.Object[]
+        type: java.lang.Object
+        dimensions:
+          - []
     imports:
       - java.util.Arrays
 
@@ -90,7 +92,9 @@
       String arrayString = Arrays.toString(myArray));
     variables:
       - name: myArray
-        type: java.lang.Object[]
+        type: java.lang.Object
+        dimensions:
+          - []
     imports:
       - java.util.Arrays
 
@@ -239,29 +243,36 @@
       System.arraycopy(src, 0, dest, 0, src.length);
     variables:
       - name: src
-        type: array
+        type: java.lang.Object
       - name: dest
-        type: array
+        type: java.lang.Object
   intent: make copy of array
   uuid: 4f2c5cae-06c9-417b-82a5-4a4836b89021
 
 ---
   snippet:
     code: |
-      List<Value> list = new ArrayList<Value>(map.values());
+      List<T> list = new ArrayList<T>(map.values());
+    parameters:
+      - name: T
     variables:
       - name: map
         type: java.util.Map
+        parameters:
+          - T
     imports:
       - java.util.Map
+      - java.util.List
   intent: convert map to list
   uuid: 4df1995f-3b04-4896-8b50-6990668a4995
 
 ---
   snippet:
+    parameters:
+      - name: T
+        extendz: Enum
     code: |
-      MyEnum.valueOf("STRING_NAME");
-
+      T.valueOf("STRING_VALUE");
   intent: lookup enum by string value
   uuid: 2e94a914-90cb-4030-94bb-e736a06780cb
 
@@ -307,11 +318,12 @@
 ---
   snippet:
     code: |
-      ArrayList<String> places = new ArrayList<>(
-        Arrays.asList("Buenos Aires", "Córdoba", "La Plata"));
+      ArrayList<String> elements = new ArrayList<>(
+        Arrays.asList("Element1", "Element2", "Element3"));
     imports:
       - java.util.Arrays
-  intent: initialization of an arraylist in one line
+      - java.util.ArrayList
+  intent: initialize an arraylist in one line
   uuid: 5fd83cf4-7ecc-43e1-8188-d009fa05cebd
 
 ---
@@ -321,15 +333,7 @@
   intent: get current stack trace
   uuid: 6d8aff7e-898e-41c9-a444-f7d5a1be52a5
 
----
-  snippet:
-    code: |
-      //Use ByteArrayOutputStream
-      new String( baos.toByteArray(), Charset.defaultCharset());
-    imports:
-      - java.nio.charset.Charset
-  intent: get an outputstream into a string
-  uuid: 08a3c41f-b47f-48fe-8510-e0797d302045
+
 
 ---
   snippet:
@@ -548,11 +552,23 @@
 
 ---
   snippet:
+    imports:
+      - java.util.HashMap
+      - java.util.Entry
+    parameters:
+      - name: K
+      - name: V
+    variables:
+      - name: myHashMap
+        type: java.util.HashMap
+        parameters:
+          - K
+          - V
     code: |
-      HashMap<String, HashMap> selects = new HashMap<String, HashMap>();
-      for(Entry<String, HashMap> entry : selects.entrySet()) {
-        String key = entry.getKey();
-        HashMap value = entry.getValue();
+      HashMap<K, V> myHashMap = new HashMap<>();
+      for(Entry<K, V> entry : myHashMap.entrySet()) {
+        K key = entry.getKey();
+        V value = entry.getValue();
       }
 
   intent: for each the hashmap
@@ -630,6 +646,7 @@
       List list = new ArrayList(myCollection);
     imports:
       - java.util.ArrayList
+      - java.util.Collection
       - java.util.List
     variables:
       - name: myCollection
@@ -658,45 +675,56 @@
 ---
   snippet:
     imports:
-      - org.json.JSONObject"
+      - org.json.JSONObject
+      - org.json.JSONArray
+    variables:
+      - name: jsonString
+        type: java.lang.String
     code: |
-      JSONObject obj = new JSONObject(" .... ");
-      String value = obj.getJSONObject("object_field").getString("field");
+      JSONObject obj = new JSONObject(jsonString);
+      // String value = obj.getJSONObject("field").getString("field");
 
-      JSONArray arr = obj.getJSONArray("array_field");
-      for (int i = 0; i < arr.length(); i++)
-      {
-       String name = arr.getJSONObject(i).getString("name");
-      }
-
-  intent: parse json
+      // JSONArray arr = obj.getJSONArray("array_field");
+      // for (int i = 0; i < arr.length(); i++) {
+      //   String name = arr.getJSONObject(i).getString("name");
+      // }
+  intent: parse json string
   uuid: 62544b87-52a6-4f1b-b1c0-5a831cf0c6e2
 
 ---
   snippet:
+    imports:
+      - java.util.Objects
     code: |
       Objects.equals("test", new String("test")) //true
-
   intent: compare strings
   uuid: 91f245b5-0a2a-4115-bcf0-ebfc26fd935c
 
 ---
   snippet:
+    variables:
+      - name: str
+        type: java.lang.String
     code: |
-       if (str != null && str.length() > 0 && str.charAt(str.length()-1)=='x') {
-       str = str.substring(0, str.length()-1);
-       }
-       return str;
-
+      if (str != null && str.length() > 0) {
+        String result = str.substring(0, str.length()-1);
+      }
   intent: remove the last character from a string
   uuid: f236bc03-6667-4133-bdb7-5bec879ad456
 
 ---
   snippet:
+    imports:
+      - java.util.List
+    variables:
+      - name: myList
+        type: java.util.List
+        parameters:
+          - String
     code: |
       String joined = String.join(", ", myList);
 
-  intent: convert list<string> to a string
+  intent: concatenate convert List<String> to a String
   uuid: b46cc275-66c5-40ca-9ef5-5af14bf0ab9c
 
 ---
@@ -721,31 +749,19 @@
   intent: a quick and easy way to join array elements with a separator (the opposite of split)
   uuid: ca6b83c6-f673-4bcd-85be-2e90d3c4f5a3
 
----
-  snippet:
-    code: |
-      public class Test {
-       private static final Map<Integer, String> myMap;
-       static {
-       Map<Integer, String> aMap = ....;
-       aMap.put(1, "one");
-       aMap.put(2, "two");
-       myMap = Collections.unmodifiableMap(aMap);
-       }
-      }
 
-  intent: initialise a static map
-  uuid: 0415a2f4-5b30-40eb-bd98-40d08d099a34
 
 ---
   snippet:
+    imports:
+      - java.net.URI
     code: |
       URI uri = new URI(
-       "http",
+       "https",
        "www.google.com",
-       "/ig/api",
-       "weather=San Francisco",
-       null);
+       "/search",
+       "q=San Francisco",
+       "#fragment");
       String request = uri.toASCIIString();
 
   intent: http url address encoding
@@ -753,29 +769,31 @@
 
 ---
   snippet:
-    code: |
-      File[] files = directory.listFiles();
-      Arrays.sort(files, new Comparator<File>(){
-       public int compare(File f1, File f2) {
-         return Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
-       }
-      });
     imports:
       - java.util.Arrays
-  intent: best way to list files , sorted by date modified
+      - java.io.File
+    variables:
+      - name: directory
+        type: java.io.File
+    code: |
+      File[] files = directory.listFiles();
+      Arrays.sort(files, (f1, f2) ->
+        Long.valueOf(f1.lastModified()).compareTo(f2.lastModified()));
+
+  intent: list files in a directory sorted by date modified
   uuid: 8ff518fd-6329-4096-909b-4e9e058aa220
 
 ---
   snippet:
     code: |
       public static byte[] hexStringToByteArray(String s) {
-       int len = s.length();
-       byte[] data = new byte[len / 2];
-       for (int i = 0; i < len; i += 2) {
-       data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-       + Character.digit(s.charAt(i+1), 16));
-       }
-       return data;
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+        data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+            + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
       }
 
   intent: convert a string representation of a hex dump to a byte array
@@ -800,24 +818,37 @@
 
 ---
   snippet:
+    imports:
+      - java.util.List
+      - java.util.ListIterator
+    variables:
+      - name: myList
+        type: java.util.List
     code: |
-      ListIterator li = a.listIterator(a.size());
-
+      ListIterator listIterator = myList.listIterator(myList.size());
       // Iterate in reverse.
-      while(li.hasPrevious()) {
-       System.out.println(li.previous());
+      while(listIterator.hasPrevious()) {
+        // System.out.println(listIterator.previous());
       }
 
-  intent: iterating through a list in reverse order
+  intent: iterate through a list in reverse order
   uuid: 83dabf3f-53c2-47e2-a4f4-75dc10c56ff2
 
 ---
   snippet:
+    imports:
+      - java.util.List
+    parameters:
+      - name: T
+    variables:
+      - name: sourceList
+        type: java.util.List
+        parameters:
+          - T
     code: |
-      public static List<Dog> cloneList(List<Dog> list) {
-       List<Dog> clone = new ArrayList<Dog>(list.size());
-       for (Dog item : list) clone.add(item.clone());
-       return clone;
+      List<T> clonedList = new ArrayList<T>(sourceList.size());
+      for (T item : clonedList) {
+          clonedList.add(item.clone());
       }
 
   intent: clone arraylist and also clone its contents
@@ -825,18 +856,30 @@
 
 ---
   snippet:
+    imports:
+      - java.util.GregorianCalendar
+      - java.util.Date
+      - javax.xml.datatype.DatatypeFactory
+      - javax.xml.datatype.GregorianCalendar
+      - javax.xml.datatype.XMLGregorianCalendar
+    variables:
+      - name: myDate
+        type: java.util.Date
     code: |
-      GregorianCalendar c = new GregorianCalendar();
-      c.setTime(yourDate);
-      XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+      GregorianCalendar cal = new GregorianCalendar();
+      cal.setTime(myDate);
+      XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 
-  intent: java.util.date to xmlgregoriancalendar
+  intent: java.util.date date to XMLGregorianCalendar
   uuid: f16160f9-78e7-435e-8992-795dc4e2de54
 
 ---
   snippet:
+    variables:
+      - name: longVar
+        type: long
     code: |
-      Integer i = theLong != null ? theLong.intValue() : null;
+      Integer i = longVar != null ? longVar.intValue() : null;
 
   intent: convert long into integer
   uuid: d539570e-23f6-449b-8701-454e4600da75
@@ -861,24 +904,6 @@
 ---
   snippet:
     code: |
-      Foo value = map.get(key);
-      if (value != null) {
-       ...
-      } else {
-       // Key might be present...
-       if (map.containsKey(key)) {
-       // Okay, there's a key but the value is null
-       } else {
-       // Definitely no such key
-       }
-      }
-
-  intent: key existence check in hashmap
-  uuid: b4fc4e45-2faa-4c6d-b638-d8aea049c9fc
-
----
-  snippet:
-    code: |
       List<String> supplierNames = Arrays.asList("sup1", "sup2", "sup3");
     imports:
       - java.util.Arrays
@@ -888,9 +913,12 @@
 
 ---
   snippet:
+    imports:
+      - java.io.InputStream
+      - org.apache.commons.io.IOUtils
+      - java.nio.charset.StandardCharsets
     code: |
       String str = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-
   intent: utf-8 byte[] to string
   uuid: 2ea51340-d907-44b5-bf63-67419c03dd01
 
@@ -898,27 +926,44 @@
   snippet:
     code: |
       OutputStream out;
-      IOUtils.copy(in,out);
+      IOUtils.copy(in, out);
       in.close();
       out.close();
-
-  intent: easy way to write contents of a inputstream to an outputstream
+    imports:
+      - java.io.InputStream
+      - java.io.OutputStream
+      - org.apache.commons.io.IOUtils
+    variables:
+      - name: in
+        type: java.io.InputStream
+      - name: out
+        type: java.io.OutputStream
+  intent: copy contents from a inputstream to an outputstream
   uuid: 8a00f0a6-ad8c-4dd9-b2c9-29a387243056
 
 ---
   snippet:
+    imports:
+      - org.apache.commons.io.FilenameUtils
+    variables:
+      - name: filename
+        type: java.lang.String
     code: |
-      String ext = FilenameUtils.getExtension("/path/to/file/foo.txt");
+      String extension = FilenameUtils.getExtension(filename);
 
   intent: get the file extension of a file
   uuid: 5e312586-aca8-4bae-8a8d-cbb4d4fd7e74
 
 ---
   snippet:
+    imports:
+      - org.apache.commons.lang3.StringEscapeUtils
+    variables:
+      - name: htmlString
+        type: java.lang.String
     code: |
-      org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(myHTML);
-
-  intent: recommended method for escaping html
+      String result = StringEscapeUtils.escapeHtml4(htmlString);
+  intent: escape html
   uuid: 58018e40-5236-4cd6-a894-16e0510eea5b
 
 ---
@@ -967,22 +1012,35 @@
 
 ---
   snippet:
+    imports:
+      - java.io.PrintWriter
+    variables:
+      - name: filename
+        type: java.lang.String
+      - name: content
+        type: java.lang.String
     code: |
-      PrintWriter out = new PrintWriter("filename.txt");
-      out.println(text);
+      PrintWriter out = new PrintWriter(filename);
+      out.println(content);
 
-  intent: save a string to a text file
+  intent: save a string content to a text file
   uuid: cc6f0805-a006-42ac-bb81-98cdc3a65a56
 
 ---
   snippet:
+    imports:
+      - java.util.ArrayList
+      - java.util.Collections
+    parameters:
+      - name: T
+    variables:
+      - name: myList
+        type: java.util.ArrayList
+        parameters:
+          - T
     code: |
-      Collections.sort(Database.arrayList, new Comparator<MyObject>() {
-       @Override
-       public int compare(MyObject o1, MyObject o2) {
-       return o1.getStartDate().compareTo(o2.getStartDate());
-       }
-      });
+      Collections.sort(myList,
+        (o1, o2) -> o1.property().compareTo(o2.property()));
 
   intent: sort arraylist of custom objects by property
   uuid: 0eb6d36d-59b2-452f-a1fa-235510a25b55
@@ -997,66 +1055,103 @@
 
 ---
   snippet:
+    imports:
+      - java.io.InputStream
+      - java.io.ByteArrayInputStream
+    variables:
+      - name: myString
+        type: java.lang.String
     code: |
-      InputStream is = new ByteArrayInputStream( myString.getBytes( charset ) );
+      InputStream is = new ByteArrayInputStream(myString.getBytes());
 
   intent: turn a string into a stream
   uuid: 15ea67d9-6f91-4da4-a75a-e20e19d59c01
 
 ---
   snippet:
+    imports:
+      - org.apache.commons.lang3.StringUtils
     code: |
       int count = StringUtils.countMatches("a.b.c.d", ".");
-
-
   intent: count the number of occurrences of a char in a string
   uuid: e0da43a5-e9ae-453e-bde5-cb1ffe5bd82b
 
 ---
   snippet:
+    imports:
+      - java.util.Iterator
+      - java.util.Map
+      - java.util.HashMap
+    variables:
+      - name: myHashMap
+        type: java.util.HashMap
     code: |
-      public static void printMap(Map mp) {
-       Iterator it = mp.entrySet().iterator();
-       while (it.hasNext()) {
-       Map.Entry pair = (Map.Entry)it.next();
-       System.out.println(pair.getKey() + " = " + pair.getValue());
-       it.remove(); // avoids a ConcurrentModificationException
-       }
+      Iterator it = myHashMap.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry pair = (Map.Entry)it.next();
+        // it.remove(); // avoids a ConcurrentModificationException
       }
 
-  intent: iterate through a hashmap
+  intent: iterate through a hashmap and remove elements
   uuid: f21ffa2a-08fb-448b-801a-765627f674b6
 
 ---
   snippet:
+    imports:
+      - java.time.LocalDate
+      - java.time.ZoneId
+      - java.util.Date
+    variables:
+      - name: myDate
+        type: java.util.Date
     code: |
-      Date input = new Date();
-      LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-
+      LocalDate localDate = myDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
   intent: convert java.util.date to java.time.localdate
   uuid: 6e49bc0a-28aa-4250-8529-58ad7aad6f9e
 
 ---
   snippet:
+    imports:
+      - java.util.Date
+    variables:
+      - name: unixTs
+        type: long
     code: |
-      java.util.Date time=new java.util.Date((long)timeStamp*1000);
+      Date time=new Date((long)unixTs * 1000);
 
   intent: date from unix timestamp
   uuid: e5966ce9-a1be-48f5-9499-1538a5e1aeec
 
 ---
   snippet:
+    parameters:
+      - name: T
+        extendz: Enum
+    variables:
+      - name: myOrd
+        type: int
     code: |
-      MyEnum.values()[my_int]
-
+      T.values()[myOrd]
   intent: cast int to enum
   uuid: 8f8794b7-ca8d-4195-80d0-362954210f14
 
 ---
   snippet:
+    imports:
+      - org.apache.commons.lang3.ArrayUtils
+    parameters:
+      - name: T
+    variables:
+      - name: first
+        type: T
+        dimensions:
+          - []
+      - name: second
+        type: T
+        dimensions:
+          - []
     code: |
-      String[] both = (String[])ArrayUtils.addAll(first, second);
+      T[] both = (T[])ArrayUtils.addAll(first, second);
 
   intent: concatenate two arrays
   uuid: aa265ca2-5649-40e5-9ab9-6674b59935fc
@@ -1066,28 +1161,27 @@
     code: |
       @Test(expected=IndexOutOfBoundsException.class)
       public void testIndexOutOfBoundsException() {
-       ArrayList emptyList = new ArrayList();
-       Object o = emptyList.get(0);
+        // ArrayList emptyList = new ArrayList();
+        // Object o = emptyList.get(0);
       }
 
-  intent: how do you assert that a certain exception is thrown in junit 4 tests
+  intent: assert a certain exception is thrown in junit 4 tests
   uuid: 966016f4-ddf4-4141-b12c-629b2a7be6e9
 
 ---
   snippet:
     code: |
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      try (InputStream is = Files.newInputStream(Paths.get("file.txt"));
-       DigestInputStream dis = new DigestInputStream(is, md))
-      {
-       /Applications /Incompatible Software /Library /Network /System /Users /Volumes /bin /cloudsql /cores /data /dev /etc /home /installer.failurerequests /net /opt /private /sbin /tmp /usr /var Read decorated stream (dis) to EOF as normal... */
-      }
-      byte[] digest = md.digest();
+      HashCode md5 = Files.hash(file, Hashing.md5());
+      // md5.toString();
     imports:
-      - java.nio.file.Paths
-      - java.nio.file.Files
-
-  intent: getting a file's md5 checksum
+      - java.io.File
+      - com.google.common.io.Files
+      - com.google.common.hash.HashCode
+      - com.google.common.hash.Hashing
+    variables:
+      - name: file
+        type: java.io.File
+  intent: getting a file md5 checksum
   uuid: 9271b203-9b73-457c-8821-9702916bdb32
 
 ---
@@ -1112,10 +1206,18 @@
 
 ---
   snippet:
+    imports:
+      - java.util.Date
+      - org.joda.time.Days
+      - org.joda.time.LocalDate
+    variables:
+      - name: start
+        type: java.util.Date
+      - name: end
+        type: java.util.Date
     code: |
-      Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays()
-
-  intent: number of days between two dates in joda-time
+      Days.daysBetween(new LocalDate(start), new LocalDate(end)).getDays()
+  intent: number of days between two dates in joda time
   uuid: b75fa949-1efe-45c6-9aab-3a1af4a3c638
 
 ---
@@ -1152,22 +1254,33 @@
 
 ---
   snippet:
+    imports:
+      - java.io.File
+    variables:
+      - name: myFileName
+        type: java.lang.String
     code: |
-      File f = new File(filePathString);
-      if(f.exists() && !f.isDirectory()) {
-       // do something
-      }
+      File f = new File(myFileName);
+      boolean fileExists = f.exists() && !f.isDirectory();
 
-  intent: check if a file exists
+  intent: check if a file name exists
   uuid: ecb396c4-2240-4b76-bb3d-bbcf2977de5b
 
 ---
   snippet:
+    imports:
+      - java.util.Date
+      - java.util.concurrent.TimeUnit
+    variables:
+      - name: date1
+        type: java.util.Date
+      - name: date2
+        type: java.util.Date
     code: |
-      //Use JodaTime
-      Interval interval = new Interval(oldInstant, new Instant());
-
-  intent: calculating the difference between two date instances
+      long diffInMillies = date2.getTime() - date1.getTime();
+      long diffDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+      // long diffHours = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+  intent: calculate the difference between two date instances
   uuid: 83cfcefb-d8b3-4a53-af7c-29c505eadbab
 
 ---
@@ -1182,9 +1295,17 @@
 
 ---
   snippet:
+    imports:
+      - java.net.URL
+      - java.io.File
+      - org.apache.commons.io.FileUtils
+    variables:
+      - name: sourceUrl
+        type: java.net.URL
+      - name: destination
+        type: java.io.File
     code: |
-      FileUtils.copyURLToFile(URL, File)
-
+      FileUtils.copyURLToFile(sourceUrl, destination)
   intent: download and save a file from internet
   uuid: b365d5ec-88ce-421b-bc1d-ed9b7fd0261e
 
@@ -1208,8 +1329,17 @@
 
 ---
   snippet:
+    imports:
+      - java.util.List
+    parameters:
+      - name: T
+    variables:
+      - name: myList
+        type: java.util.List
+        parameters:
+          - T
     code: |
-      Foo[] array = list.toArray(new Foo[list.size()]);
+      T[] array = myList.toArray(new T[myList.size()]);
 
   intent: convert list to array
   uuid: 3f4d79d4-8e46-4e48-b150-1933cf42634f
@@ -1217,55 +1347,83 @@
 ---
   snippet:
     code: |
-      List<Person> beerDrinkers = persons.stream()
-       .filter(p -> p.getAge() > 16).collect(Collectors.toList());
-
+      List<T> filteredResult = myList.stream()
+       .filter(e -> Boolean.getBoolean(e)).collect(Collectors.toList());
+    parameters:
+      - name: T
+    variables:
+      - name: myList
+        type: java.util.List
+        parameters:
+          - T
+    imports:
+      - java.util.stream.Collectors
+      - java.util.List
   intent: best way to filter a collection
   uuid: 219e82de-98ba-4b41-a55c-0b009bae7778
 
 ---
   snippet:
     code: |
-      List<String> newList = new ArrayList<String>(listOne);
+      List<T> newList = new ArrayList<T>(listOne);
       newList.addAll(listTwo);
-
+    parameters:
+      - name: T
+    imports:
+      - java.util.ArrayList
+      - java.util.List
+    variables:
+      - name: listOne
+        type: java.util.List
+        parameters:
+          - T
+      - name: listTwo
+        type: java.util.List
+        parameters:
+          - T
   intent: join two lists
   uuid: fa095020-13ec-4b19-99bd-6c627052c945
 
 ---
   snippet:
     code: |
-      String q = "random word £500 bank $";
-      String url = "http://example.com/query?q=" + URLEncoder.encode(q, "UTF-8");
-
-  intent: url encoding of query string parameters
+      String url = "https://www.google.com/search?q=" + URLEncoder.encode(query, "UTF-8");
+    variables:
+      - name: query
+        type: java.lang.String
+    imports:
+      - java.net.URLEncoder
+  intent: encode URL query string parameters
   uuid: f3016f74-2f23-427c-ae27-8701b2e6741f
 
 ---
   snippet:
     code: |
       String.format("%d min, %d sec",
-       TimeUnit.MILLISECONDS.toMinutes(millis),
-       TimeUnit.MILLISECONDS.toSeconds(millis) -
-       TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+        TimeUnit.MILLISECONDS.toMinutes(millis),
+        TimeUnit.MILLISECONDS.toSeconds(millis) -
+        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
       );
-
+    imports:
+      - java.util.concurrent.TimeUnit
+    variables:
+      - name: millis
+        type: long
   intent: convert milliseconds to minutes and seconds
   uuid: a77c9593-a071-43f1-a406-81bf244127b6
 
 ---
   snippet:
     code: |
-      static String readFile(String path, Charset encoding)
-       throws IOException
-      {
-       byte[] encoded = Files.readAllBytes(Paths.get(path));
-       return new String(encoded, encoding);
-      }
+       byte[] encoded = Files.readAllBytes(Paths.get(fileName));
+       String content = new String(encoded, StandardCharsets.UTF_8);
     imports:
       - java.nio.file.Paths
       - java.nio.file.Files
-
+      - java.nio.charset.StandardCharsets
+    variables:
+      - name: fileName
+        type: java.lang.String
   intent: create a string from the contents of a file
   uuid: 8464b35f-5e86-4752-b6f0-1217bf392953
 
@@ -1284,50 +1442,54 @@
 ---
   snippet:
     code: |
-      public static int[] convertIntegers(List<Integer> integers)
-      {
-       int[] ret = new int[integers.size()];
-       Iterator<Integer> iterator = integers.iterator();
-       for (int i = 0; i < ret.length; i++)
-       {
-       ret[i] = iterator.next().intValue();
+       int[] result = new int[intList.size()];
+       Iterator<Integer> iterator = intList.iterator();
+       for (int i = 0; i < ret.length; i++) {
+         result[i] = iterator.next().intValue();
        }
-       return ret;
-      }
-
-  intent: convert an arraylist containing integers to primitive int array
+    imports:
+      - java.util.ArrayList
+      - java.util.Iterator
+    variables:
+      - name: intList
+        type: java.util.ArrayList
+        parameters:
+          - Integer
+  intent: convert an ArrayList of integers to int array
   uuid: 54c009f9-848b-458d-b7a0-40b58eecc1fb
 
 ---
   snippet:
     code: |
-      IOUtils.copy(InputStream, OutputStream)
-
+      IOUtils.copy(ins, outs)
+    variables:
+      - name: ins
+        type: InputStream
+      - name: outs
+        type: OutputStream
+    imports:
+      - java.io.InputStream
+      - java.io.OutputStream
+      - org.apache.commons.io.IOUtils
   intent: convert outputstream to inputstream
   uuid: 099fce7c-21f7-4d9a-9b73-fcae23c8d870
 
----
-  snippet:
-    code: |
-      Transformer transformer = TransformerFactory.newInstance().newTransformer();
-      transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-      transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-      //initialize StreamResult with File object to save to file
-      StreamResult result = new StreamResult(new StringWriter());
-      DOMSource source = new DOMSource(doc);
-      transformer.transform(source, result);
-      String xmlString = result.getWriter().toString();
-      System.out.println(xmlString);
 
-  intent: pretty print xml
-  uuid: e60265d6-fcc7-415f-921e-953641d621cc
 
 ---
   snippet:
+    imports:
+      - java.util.List
     code: |
-      MyClass e = list.get(list.size() - 1);
-
-  intent: get the last value of an arraylist
+      MyClass lastElement = myList.get(myList.size() - 1);
+    parameters:
+      - name: MyClass
+    variables:
+      - name: myList
+        type: java.util.List
+        parameters:
+          - MyClass
+  intent: get the last element of an ArrayList
   uuid: 9d11dc3c-9d29-4ec5-947c-5ee32b478037
 
 ---
@@ -1363,27 +1525,40 @@
 
 ---
   snippet:
-    code: |
-      try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-       stream.forEach(System.out::println);
-      }
     imports:
       - java.nio.file.Paths
       - java.nio.file.Files
+      - java.util.Stream
+    code: |
+      try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+        stream.forEach(System.out::println);
+      }
   intent: read a large text file line by line
   uuid: 83d404ce-5512-467f-9241-f18bda5aed53
 
 ---
   snippet:
+    imports:
+      - java.util.HashMap
+      - java.util.Map
+      - java.util.Objects
+      - java.util.stream.Collectors
+    parameters:
+      - name: T
+    variables:
+      - name: myHashMap
+        type: java.util.HashMap
+        parameters:
+          - T
+      - name: value
+        type: T
     code: |
-      public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-       return map.entrySet()
+      myHashMap.entrySet()
        .stream()
        .filter(entry -> Objects.equals(entry.getValue(), value))
        .map(Map.Entry::getKey)
        .collect(Collectors.toSet());
-      }
-  intent: hashmap get key from value
+  intent: hashmap get keys from value
   uuid: 0b70ae39-035c-4304-8e28-51c4628de5e9
 
 ---
@@ -1485,11 +1660,18 @@
 ---
   snippet:
     code: |
-      Set<T> mySet = new HashSet<T>(Arrays.asList(someArray));
+      Set<T> mySet = new HashSet<T>(Arrays.asList(myArray));
+    parameters:
+      - name: T
     imports:
       - java.util.Arrays
       - java.util.Set
       - java.util.HashSet
+    variables:
+      - name: myArray
+        type: T
+        dimensions:
+          - []
   intent: convert an array to a set
   uuid: 960263d5-7391-4813-aab1-fd6f2eced2b3
 
@@ -1507,13 +1689,6 @@
   intent: convert byte size into human readable format
   uuid: d1a6bb9f-cc85-4bc4-b8da-c93b067e6705
 
----
-  snippet:
-    code: |
-      Jsoup.parse(html).text();
-
-  intent: remove html tags from a string
-  uuid: 1785956a-4040-419c-abab-80012a6d8120
 
 ---
   snippet:
@@ -1564,13 +1739,16 @@
 ---
   snippet:
     code: |
-      List<String> al = new ArrayList<>();
-      // add elements to al, including duplicates
-      Set<String> hs = new HashSet<>();
-      hs.addAll(al);
-      al.clear();
-      al.addAll(hs);
-
+      Set<String> hashSet = new HashSet<>();
+      List<String> arrayList = new ArrayList<>();
+      hashSet.addAll(arrayList);
+      arrayList.clear();
+      arrayList.addAll(hashSet);
+    imports:
+      - java.util.ArrayList
+      - java.util.HashSet
+      - java.util.List
+      - java.util.Set
   intent: remove repeated elements from arraylist
   uuid: dee97f51-6c6e-49f5-88ba-e2926127486d
 
@@ -1580,6 +1758,7 @@
       Collections.shuffle(myList, new Random(System.nanoTime()));
     imports:
       - java.util.Collections
+      - java.util.List
       - java.util.Random
     variables:
       - name: myList
