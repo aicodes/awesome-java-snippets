@@ -207,7 +207,7 @@
 ---
   snippet:
     code: |
-      boolean contains = IntStream.of(myArray).anyMatch(x -> x.equals(myValue));
+      boolean contains = Arrays.stream(myArray).anyMatch(x -> x.equals(myValue));
     variables:
       - name: myValue
         type: java.lang.Object
@@ -216,7 +216,7 @@
         dimensions:
           - "[]"
     imports:
-      - java.util.stream.IntStream
+      - java.util.Arrays
   intent: test if an array contains a certain value
   uuid: 718fb160-6da3-432e-b565-2ad6648a9a06
 
@@ -901,7 +901,7 @@
           - T
     code: |
       List<T> clonedList = new ArrayList<T>(sourceList.size());
-      for (T item : clonedList) {
+      for (T item: clonedList) {
           clonedList.add(item.clone());
       }
 
@@ -1188,13 +1188,13 @@
 ---
   snippet:
     parameters:
-      - name: T
-        extendz: Enum
+      - name: E
+        extendz: java.lang.Enum
     variables:
       - name: myOrd
         type: int
     code: |
-      T.values()[myOrd];
+      E.values()[myOrd];
   intent: cast int to enum
   uuid: 8f8794b7-ca8d-4195-80d0-362954210f14
 
@@ -1593,7 +1593,7 @@
     imports:
       - java.nio.file.Paths
       - java.nio.file.Files
-      - java.util.Stream
+      - java.util.stream.Stream
     variables:
       - name: fileName
         type: java.lang.String
